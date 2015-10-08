@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+gem 'ng_rails', path: '~/dev/ng_scaffold'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use sqlite3 as the database for Active Record
@@ -45,3 +45,19 @@ group :development do
   gem 'spring'
 end
 
+
+gem 'mysql2'
+gem 'slim'
+gem 'slim-rails'
+gem 'angularjs-rails'
+gem 'angular-rails-templates'
+gem 'bootstrap-sass'
+gem 'bootstrap-sass-extras'
+gem 'will_paginate-bootstrap', '~> 1.0.1'
+gem 'font-awesome-rails'
+gem 'sprockets', '2.12.3'
+gem 'cancancan', '~> 1.10'
+gem 'paperclip', '~> 4.2'
+gem 'will_paginate', '~> 3.0.6'
+gem 'selectize-rails'
+gem 'i18n-js', '>= 3.0.0.rc8'
