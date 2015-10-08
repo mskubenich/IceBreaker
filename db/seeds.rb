@@ -1,2 +1,2 @@
 puts "Create admin ..."
-User.create email: 'admin@wauseon.com', password: 'secret', password_confirmation: 'secret'
+User.create email: 'admin@gmail.com', password: 'secret', password_confirmation: 'secret'

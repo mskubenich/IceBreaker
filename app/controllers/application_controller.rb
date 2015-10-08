@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
 
   before_filter :authenticate_user
 
-  protect_from_forgery with: :exception
-
   rescue_from Exception, with: :catch_exceptions
 
   def authenticate_user
@@ -35,7 +33,7 @@ class ApplicationController < ActionController::Base
   private
 
   def respond_with_errors
-    render json: {error: 'Access Denied !' }, status: :unauthorized and return
+    render json: {errors: ['Access denied.'] }, status: :unauthorized and return
   end
 
   def catch_exceptions(e)

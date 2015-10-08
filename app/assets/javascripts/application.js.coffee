@@ -13,6 +13,8 @@
 #= require angular-images.directive
 #= require angular-image.directive
 #= require underscore
+#= require highlight.pack
+#= require ahjs
 #= require i18n
 #= require i18n/translations
 #= require angular-range-slider

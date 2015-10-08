@@ -6,7 +6,14 @@ class User < ActiveRecord::Base
                     format: { with: /.*\@.*\..*/, message: "is incorrect"},
                     presence: true
 
+  validates_presence_of :first_name, :last_name, :email, :user_name
+  validates :gender, inclusion: { in: [:male, :female], message: 'can be only male/female'}, presence: true
+  validates_uniqueness_of :user_name
+
   before_save :encrypt_password
+
+  has_attached_file :avatar, highlight_styles: { thumb: '200x200>' }, default_url: '/assets/avatar.png', default_style: :thumb
+  validates_attachment :avatar, content_type: { content_type: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'application/octet-stream'] }
 
   def authenticate(password)
     self.encrypted_password == encrypt(password)

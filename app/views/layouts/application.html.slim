@@ -20,6 +20,9 @@ html(lang="en")
           .well
             .sidebar-nav style="padding: 0"
               ul.nav.nav-pills.nav-stacked
+                li role="presentation" ng-class="{'active' : $state.current.name == 'users' }"
+                  a href="#user/new"
+                    | Users
         .col-md-9
           div ui-view=true
 

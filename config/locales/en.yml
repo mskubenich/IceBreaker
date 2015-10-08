@@ -21,3 +21,42 @@
 
 en:
   hello: "Hello world"
+
+  datetime:
+    ago: 'ago'
+    at: 'at'
+  validations:
+    cant_be_blank: "Can't be blank."
+
+  actions:
+    submit: "Submit"
+    confirm: "Confirm"
+    cancel: "Cancel"
+
+  user:
+    new: "New User"
+    edit: "Edit User"
+    fields:
+      name: "Name"
+      created_at: "Created at"
+      updated_at: "Updated at"
+    messages:
+      success_upsert: 'User successfully saved.'
+
+  user:
+    new: "New User"
+    edit: "Edit User"
+    fields:
+      first_name: "First name"
+      last_name: "Last name"
+      gender: "Gender"
+      date_of_birth: "Date of birth"
+      user_name: "User name"
+      email: "Email"
+      password: "Password"
+      password_confirmation: "Password confirmation"
+      avatar: "Avatar"
+      created_at: "Created at"
+      updated_at: "Updated at"
+    messages:
+      success_upsert: 'User successfully saved.'

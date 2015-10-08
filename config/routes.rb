@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :users, only: [:create, :update, :edit, :destroy]
+
   root to: 'pages#index'
        resources :pages, only:[] do
 
