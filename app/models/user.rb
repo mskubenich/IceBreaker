@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
                     presence: true
 
   validates_presence_of :first_name, :last_name, :email, :user_name
-  validates :gender, inclusion: { in: [:male, :female], message: 'can be only male/female'}, presence: true
+  validates :gender, inclusion: { in: ['male', 'female'], message: 'can be only male/female'}, presence: true
   validates_uniqueness_of :user_name
 
   before_save :encrypt_password

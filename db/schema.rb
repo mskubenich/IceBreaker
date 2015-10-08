@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20151008143840) do
     t.string   "user_name",           limit: 255
     t.string   "first_name",          limit: 255
     t.string   "last_name",           limit: 255
-    t.integer  "gender",              limit: 4
+    t.string   "gender",              limit: 255
     t.date     "date_of_birth"
     t.string   "encrypted_password",  limit: 255
     t.string   "salt",                limit: 255

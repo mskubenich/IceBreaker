@@ -24,10 +24,10 @@
                         users.upsert($scope.user)
                             .success(function(responce_data, code, headers, config){
                                 $scope.response = {
-                                    response: responce_data,
-                                    code: code,
-                                    headers: headers,
-                                    config: config
+                                    response: JSON.stringify(responce_data, null, 2),
+                                    code: JSON.stringify(code, null, 2),
+                                    headers: JSON.stringify(headers, null, 2),
+                                    config: JSON.stringify(config, null, 2)
                                 };
                                 $scope.submited = true;
                                 $scope.processing = false;
