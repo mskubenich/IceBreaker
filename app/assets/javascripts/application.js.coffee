@@ -22,6 +22,7 @@
 #= require selectize
 #= require angular-bootstrap-lightbox
 # load angular modules
+#= require ./application/application.module.js
 #= require_tree ./application/factories
 #= require_tree ./application/controllers
 #= require_tree ./application/templates

@@ -1,0 +1,9 @@
+<form novalidate ng-submit="submitLoginCredentials()" style="text-align:center">
+	<h3><i class="fa fa-exclamation-triangle"></i> Login required</h3>
+    <input type="text" style="margin:1em auto; text-align:center; width: 100%;" ng-model="email"/>
+    <br>
+    <input type="password" style="margin:1em auto; text-align:center; width: 100%;" ng-model="password"/>
+    <hr>
+    <span style="color: red">{{ errors }}</span>
+	<button class="button button-orange" type="submit">Submit</button>
+</form>
