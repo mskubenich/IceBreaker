@@ -31,6 +31,9 @@
                 if(user.avatar && user.avatar.file){
                     fd.append('avatar', user.avatar.file );
                 }
+                if(user.show_email){
+                    fd.append('show_email', user.show_email );
+                }
 
                 return $http.post('/api/v1/users', fd, {
                     transformRequest: angular.identity,

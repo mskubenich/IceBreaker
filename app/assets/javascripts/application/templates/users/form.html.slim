@@ -94,7 +94,14 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
           td
             span.model-signature file
         tr
+          td.code show_email
           td
+            input type='checkbox' ng-model="user.show_email"
+          td multipart/form-data
+          td
+            span.model-signature boolean
+        tr
+          td colspan='4'
             input.btn.btn-success type="submit" value="{{ I18n.t('actions.submit') }}"
             i.fa.fa-spinner.fa-pulse ng-show="processing" ng-disabled="processing"
 

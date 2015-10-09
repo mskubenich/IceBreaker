@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151008143840) do
+ActiveRecord::Schema.define(version: 20151009154439) do
 
   create_table "sessions", force: :cascade do |t|
     t.string   "token",      limit: 255
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20151008143840) do
     t.string   "avatar_content_type", limit: 255
     t.integer  "avatar_file_size",    limit: 4
     t.datetime "avatar_updated_at"
+    t.boolean  "show_email"
   end
 
 end

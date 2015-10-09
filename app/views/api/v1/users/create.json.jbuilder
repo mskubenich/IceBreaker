@@ -7,4 +7,5 @@ json.user do
   json.date_of_birth @user.date_of_birth
   json.user_name @user.user_name
   json.avatar @user.avatar.url
+  json.show_email !!@user.show_email
 end

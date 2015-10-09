@@ -16,7 +16,16 @@ class Api::V1::UsersController < Api::V1Controller
   private 
 
   def user_params
-    params.permit(:first_name, :last_name, :user_name, :email, :avatar, :date_of_birth, :password, :password_confirmation, :gender)
+    params.permit :first_name,
+                  :last_name,
+                  :user_name,
+                  :email,
+                  :avatar,
+                  :date_of_birth,
+                  :password,
+                  :password_confirmation,
+                  :gender,
+                  :show_email
   end
 
 end
