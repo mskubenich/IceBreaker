@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   before_save :encrypt_password
 
-  has_attached_file :avatar, highlight_styles: { thumb: '200x200>' }, default_url: '/assets/avatar.png', default_style: :thumb
+  has_attached_file :avatar, styles: { thumb: '200x200>' }, default_url: '/assets/avatar.png', default_style: :thumb
   validates_attachment :avatar, content_type: { content_type: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'application/octet-stream'] }
 
   def authenticate(password)
