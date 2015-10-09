@@ -1,10 +1,19 @@
-.btn.btn-success
-  | POST
-.btn.btn-default
-  | api/v1/users.json
-br
-h1
-  | Creates a new User
+.row
+  .col-md-7
+    .btn.btn-success.btn-sm
+      | POST
+    .btn.btn-default.btn-sm
+      | api/v1/users.json
+    br
+    h3
+      | Creates a new User
+  .col-md-5
+    h5
+      | Possible responses:
+    br
+    | 200 Success
+    br
+    | 422 Unprocessable Entity
 
 form ng-submit="submitUser()" name="UserForm" novalidate=true
   .form-group.form-group-sm
