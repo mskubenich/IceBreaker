@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
                     format: { with: /.*\@.*\..*/, message: "is incorrect"},
                     presence: true
 
-  validates_presence_of :first_name, :last_name, :email, :user_name
+  validates_presence_of :first_name, :last_name, :user_name
   validates :gender, inclusion: { in: ['male', 'female'], message: 'can be only male/female'}, presence: true
   validates_uniqueness_of :user_name
 

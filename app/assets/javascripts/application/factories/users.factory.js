@@ -32,7 +32,7 @@
                     fd.append('user[avatar]', user.avatar.file );
                 }
 
-                return $http.post('/users', fd, {
+                return $http.post('/api/v1/users', fd, {
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
                 });
