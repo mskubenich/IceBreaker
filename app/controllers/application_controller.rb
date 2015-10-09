@@ -16,17 +16,7 @@ class ApplicationController < ActionController::Base
         current_session.update_attribute :updated_at, Time.now
       end
     else
-      if params[:session]
-        user = User.find_by_email params[:session][:email]
-
-        if user && user.authenticate(params[:session][:password])
-          sign_in user
-        else
-          render json: { errors: 'Wrong email or password.' }, status: :unauthorized and return
-        end
-      else
-        respond_with_errors
-      end
+      respond_with_errors
     end
   end
 
@@ -39,7 +29,11 @@ class ApplicationController < ActionController::Base
   def catch_exceptions(e)
 
     if e.kind_of? CanCan::AccessDenied
-      authenticate_user
+      respond_with_errors
+    end
+
+    if e.kind_of? ActiveRecord::UnknownAttributeError
+      render json: {errors: ['Invalid request.'], message: e.message }, status: :unprocessable_entity and return
     end
 
     # ErrorMessage.create(

@@ -28,16 +28,25 @@
             $urlRouterProvider.otherwise('home');
 
             $stateProvider
-              .state('home',{
-                  url: '',
-                  templateUrl: 'application/templates/home/index.html',
-                  controller: 'HomeController'
-              });
-            $stateProvider
+                .state('home',{
+                    url: '',
+                    templateUrl: 'application/templates/home/index.html',
+                    controller: 'HomeController'
+                })
                 .state('new_user',{
                     url: '/user/new',
                     templateUrl: 'application/templates/users/form.html',
                     controller: 'UsersController'
+                })
+                .state('login',{
+                    url: '/login',
+                    templateUrl: 'application/templates/sessions/login.html',
+                    controller: 'SessionsController'
+                })
+                .state('logout',{
+                    url: '/logout',
+                    templateUrl: 'application/templates/session/logout.html',
+                    controller: 'SessionsController'
                 })
     }]);
 
