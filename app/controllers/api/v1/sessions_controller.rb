@@ -8,7 +8,7 @@ class Api::V1::SessionsController < Api::V1Controller
 
     if @user && @user.authenticate(session_params[:password])
       sign_in @user
-      render json: {session_token: current_session.token}
+      render json: { session_token: current_session.token}
     else
       render json: { errors: ['Wrong login/password combination.'] }, status: :unprocessable_entity
     end
@@ -16,7 +16,8 @@ class Api::V1::SessionsController < Api::V1Controller
   end
 
   def destroy
-
+    current_session.destroy
+    render nothing: true
   end
 
   private

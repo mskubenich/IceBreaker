@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:create]
       resources :sessions, only: [:create] do
-        resources do
+        collection do
           delete :destroy
         end
       end
@@ -17,11 +17,5 @@ Rails.application.routes.draw do
     get :check_session
   end
 
-  resources :sessions, only: [] do
-    collection do
-      delete :destroy
-      get :check
-      end
-  end
   resources :pages, only: [:index]
 end

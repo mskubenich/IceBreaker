@@ -45,7 +45,7 @@
                 })
                 .state('logout',{
                     url: '/logout',
-                    templateUrl: 'application/templates/session/logout.html',
+                    templateUrl: 'application/templates/sessions/logout.html',
                     controller: 'SessionsController'
                 })
     }]);

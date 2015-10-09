@@ -49,7 +49,7 @@
                     $scope.session = {};
                     $scope.headers = {};
 
-                    $scope.submitUser = function(){
+                    $scope.submit = function(){
 
                         $scope.processing = true;
                         sessions.logout($scope.headers)

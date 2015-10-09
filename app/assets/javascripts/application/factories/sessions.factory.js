@@ -13,6 +13,17 @@
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
                 });
+            },
+
+            logout: function(headers){
+                var fd = new FormData();
+
+                fd.append('session_token', headers.session_token );
+
+                return $http.delete('/api/v1/sessions', fd, {
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}
+                });
             }
         }
     }])
