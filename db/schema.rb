@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151009154439) do
+ActiveRecord::Schema.define(version: 20151013114703) do
+
+  create_table "services", force: :cascade do |t|
+    t.string  "provider", limit: 255
+    t.string  "uid",      limit: 255
+    t.string  "avatar",   limit: 255
+    t.integer "user_id",  limit: 4
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.string   "token",      limit: 255

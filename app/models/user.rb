@@ -2,18 +2,25 @@ class User < ActiveRecord::Base
   has_many :sessions, dependent: :destroy
 
   attr_accessor :password, :password_confirmation
+
   validates :email, uniqueness: { case_sensitive: false, message: "This email address is already registered." },
                     format: { with: /.*\@.*\..*/, message: "is incorrect"},
                     presence: true
 
-  validates_presence_of :first_name, :last_name, :user_name
+  validates_presence_of :first_name, :last_name, :user_name, :password
+  validates_confirmation_of :password
+
   validates :gender, inclusion: { in: ['male', 'female'], message: 'can be only male/female'}, presence: true
+
   validates_uniqueness_of :user_name
 
   before_save :encrypt_password
 
   has_attached_file :avatar, styles: { thumb: '200x200>' }, default_url: '/assets/avatar.png', default_style: :thumb
+
   validates_attachment :avatar, content_type: { content_type: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'application/octet-stream'] }
+
+  has_many :services
 
   def authenticate(password)
     self.encrypted_password == encrypt(password)

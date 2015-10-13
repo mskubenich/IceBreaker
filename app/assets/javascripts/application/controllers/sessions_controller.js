@@ -44,6 +44,37 @@
                     };
                 }
 
+                if($state.current.name == 'login_with_facebook'){
+
+                    $scope.user = {};
+
+                    $scope.submitUser = function(){
+
+                        $scope.processing = true;
+                        sessions.login_with_facebook($scope.user)
+                            .success(function(responce_data, code, headers, config){
+                                $scope.response = {
+                                    response: JSON.stringify(responce_data, null, 2),
+                                    code: JSON.stringify(code, null, 2),
+                                    headers: JSON.stringify(headers, null, 2),
+                                    config: JSON.stringify(config, null, 2)
+                                };
+                                $scope.submited = true;
+                                $scope.processing = false;
+                            })
+                            .error(function(responce_data, code, headers, config){
+                                $scope.response = {
+                                    response: JSON.stringify(responce_data, null, 2),
+                                    code: JSON.stringify(code, null, 2),
+                                    headers: JSON.stringify(headers, null, 2),
+                                    config: JSON.stringify(config, null, 2)
+                                };
+                                $scope.submited = true;
+                                $scope.processing = false;
+                            })
+                    };
+                }
+
                 if($state.current.name == 'logout'){
 
                     $scope.session = {};

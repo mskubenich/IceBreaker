@@ -43,6 +43,11 @@
                     templateUrl: 'application/templates/sessions/login.html',
                     controller: 'SessionsController'
                 })
+                .state('login_with_facebook',{
+                    url: '/login_with_facebook',
+                    templateUrl: 'application/templates/sessions/login_with_facebook.html',
+                    controller: 'SessionsController'
+                })
                 .state('logout',{
                     url: '/logout',
                     templateUrl: 'application/templates/sessions/logout.html',

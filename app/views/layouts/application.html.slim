@@ -13,23 +13,39 @@ html(lang="en")
     .container ng-controller="HomeController"
       .row
         .col-md-3
-          | Users:
-          .well
-            .sidebar-nav style="padding: 0"
-              ul.nav.nav-pills.nav-stacked
-                li role="presentation" ng-class="{'active' : $state.current.name == 'new_user' }"
-                  a href="#user/new"
-                    | Create Users
-          | Sessions:
-          .well
-            .sidebar-nav style="padding: 0"
-              ul.nav.nav-pills.nav-stacked
-                li role="presentation" ng-class="{'active' : $state.current.name == 'new_session' }"
-                  a href="#login"
-                    | Login
-                li role="presentation" ng-class="{'active' : $state.current.name == 'new_session' }"
-                  a href="#logout"
-                    | Logout
+          .sidebar-nav style="padding: 0"
+
+            ul.nav.nav-pills.nav-stacked
+              li
+                a data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false" aria-controls="collapseExample"
+                  | Users:
+                br
+                .collapse#collapseUsers
+                  .well
+                    .sidebar-nav style="padding: 0"
+                      ul.nav.nav-pills.nav-stacked
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'new_user' }"
+                          a href="#user/new"
+                            | Create Users
+
+            ul.nav.nav-pills.nav-stacked
+              li
+                a data-toggle="collapse" data-target="#collapseSessions" aria-expanded="false" aria-controls="collapseExample"
+                  | Sessions:
+                br
+                .collapse#collapseSessions
+                  .well
+                    .sidebar-nav style="padding: 0"
+                      ul.nav.nav-pills.nav-stacked
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'login' }"
+                          a href="#login"
+                            | Login
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'login_with_facebook' }"
+                          a href="#login_with_facebook"
+                            | Login With Facebook
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'logout' }"
+                          a href="#logout"
+                            | Logout
         .col-md-9
           div ui-view=true
 

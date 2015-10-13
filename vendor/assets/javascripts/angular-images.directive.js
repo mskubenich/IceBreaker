@@ -55,6 +55,7 @@ angular.module('formInput.images').directive('images', ['$filter', function($fil
         scope.removeImage = function(index){
             if(scope.images_hash[index].id){
                 scope.images_hash[index].removed = true;
+                scope.images_hash[index].file = null;
             }else{
                 delete scope.images_hash[index];
             }
