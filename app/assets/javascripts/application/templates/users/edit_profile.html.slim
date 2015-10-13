@@ -1,0 +1,137 @@
+.row
+  .col-md-7
+    .btn.btn-success.btn-sm
+      | POST
+    .btn.btn-default.btn-sm
+      | api/v1/users.json
+    br
+    h3
+      | Creates a new User
+  .col-md-5
+    h5
+      | Possible responses:
+    br
+    | 200 Success
+    br
+    | 422 Unprocessable Entity
+
+form ng-submit="submitUser()" name="UserForm" novalidate=true
+  .form-group.form-group-sm
+
+    table.table.table-striped
+      thead
+        tr
+          th Header
+          th Value
+          th Description
+      tbody.operation-params
+        tr
+          td.code.required session_token
+          td
+            input.form-control type="text" ng-model="user.session_token"
+          td
+            | session token received on&nbsp;
+            a href="#login"
+              | login
+
+    table.table.table-striped
+      thead
+        tr
+          th Parameter
+          th Value
+          th Parameter Type
+          th Type
+          th Description
+      tbody.operation-params
+        tr
+          td.code.required first_name
+          td
+            input.form-control type="text" name="first_name" ng-model="user.first_name"
+          td multipart/form-data
+          td
+            span.model-signature string
+          td
+        tr
+          td.code.required last_name
+          td
+            input.form-control type="text" name="last_name" ng-model="user.last_name"
+          td multipart/form-data
+          td
+            span.model-signature string
+          td
+        tr
+          td.code.required gender
+          td
+            select.form-control name="gender" ng-model="user.gender" ng-options="choice as choice for choice in ['male', 'female']"
+              option value="{{ I18n.t('user.fields.gender') }}" disabled=true selected=true
+          td multipart/form-data
+          td
+            span.model-signature string
+          td
+        tr
+          td.code date_of_birth
+          td
+            p.input-group style="width: 196px"
+              input type="text" class="form-control" datepicker-popup="{{ 'dd-MMMM-yyyy' }}" ng-model="user.date_of_birth" is-open="date_of_birth_opened" ng-required="true" close-text="Close" ng-disabled="true"
+              span.input-group-btn
+                button type="button" class="btn btn-default" ng-click="date_of_birth_opened = true" style="height:30px; padding: 4px 12px; border-color: #ccc;"
+                  i.glyphicon.glyphicon-calendar
+          td multipart/form-data
+          td
+            span.model-signature date ("Mon Oct 19 2015 00:00:00 GMT+0300 (EEST)", "10/12/2001", etc)
+          td
+        tr
+          td.code.required user_name
+          td
+            input.form-control type="text" name="user_name" ng-model="user.user_name"
+          td multipart/form-data
+          td
+            span.model-signature string
+          td
+        tr
+          td.code.required password
+          td
+            input.form-control type="text" name="password" ng-model="user.password"
+          td multipart/form-data
+          td
+            span.model-signature string
+          td
+            | Leave blank if you don't want to change it.
+        tr
+          td.code.required password_confirmation
+          td
+            input.form-control type="text" name="password_confirmation" ng-model="user.password_confirmation"
+          td multipart/form-data
+          td
+            span.model-signature string
+          td
+        tr
+          td.code avatar
+          td
+            div image=true ng-model="user.avatar"
+          td multipart/form-data
+          td
+            span.model-signature file
+          td
+        tr
+          td.code show_email
+          td
+            input type='checkbox' ng-model="user.show_email"
+          td multipart/form-data
+          td
+            span.model-signature boolean
+          td
+        tr
+          td colspan='4'
+            input.btn.btn-success type="submit" value="{{ I18n.t('actions.submit') }}"
+            i.fa.fa-spinner.fa-pulse ng-show="processing" ng-disabled="processing"
+
+.response ng-show="response"
+  h5 Response Code:
+  div hljs=true source="response.code" no-escape=true
+  h5 Response:
+  div hljs=true source="response.response"
+  h5 Headers:
+  div hljs=true source="response.headers"
+  h5 Config:
+  div hljs=true source="response.config"

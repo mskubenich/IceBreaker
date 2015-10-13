@@ -21,6 +21,10 @@ a{
   color: red;
 }
 
+td{
+  padding: 3px !important;
+  font-size: 12px !important;
+}
 
 .droppable-area{
   border: 2px dashed transparent;
@@ -40,8 +44,8 @@ a{
       margin-bottom: 4px;
       display: inline-block;
       border: 1px solid lightgray;
-      width: 130px;
-      height: 130px;
+      width: 80px;
+      height: 80px;
       border-radius: 6px;
       -webkit-border-radius: 6px;
       -moz-border-radius: 6px;
@@ -59,8 +63,8 @@ a{
             }
           }
           position: relative;
-          width: 130px;
-          height: 130px;
+          width: 80px;
+          height: 80px;
           input[type=file]{
             display: none;
           }

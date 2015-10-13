@@ -38,6 +38,11 @@
                     templateUrl: 'application/templates/users/form.html',
                     controller: 'UsersController'
                 })
+                .state('edit_profile',{
+                    url: '/user/edit_profile',
+                    templateUrl: 'application/templates/users/edit_profile.html',
+                    controller: 'UsersController'
+                })
                 .state('login',{
                     url: '/login',
                     templateUrl: 'application/templates/sessions/login.html',

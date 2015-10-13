@@ -7,8 +7,9 @@ class User < ActiveRecord::Base
                     format: { with: /.*\@.*\..*/, message: "is incorrect"},
                     presence: true
 
-  validates_presence_of :first_name, :last_name, :user_name, :password
-  validates_confirmation_of :password
+  validates_presence_of :first_name, :last_name, :user_name
+
+  validates :password, presence: true, confirmation: true, if: lambda { new_record? || password }, length: { in: 6..20 }
 
   validates :gender, inclusion: { in: ['male', 'female'], message: 'can be only male/female'}, presence: true
 
@@ -27,7 +28,6 @@ class User < ActiveRecord::Base
   end
 
   def destroy
-    raise "Cannot destroy admin" if admin?
     super
   end
 
