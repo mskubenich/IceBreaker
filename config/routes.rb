@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :sessions, only: [:create] do
         collection do
           delete :destroy
+          delete :destroy_all
           post :facebook
         end
       end

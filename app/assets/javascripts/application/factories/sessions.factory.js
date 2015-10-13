@@ -16,14 +16,11 @@
             },
 
             logout: function(headers){
-                var fd = new FormData();
+                return $http.delete('/api/v1/sessions?session_token=' + headers.session_token );
+            },
 
-                fd.append('session_token', headers.session_token );
-
-                return $http.delete('/api/v1/sessions', fd, {
-                    transformRequest: angular.identity,
-                    headers: {'Content-Type': undefined}
-                });
+            logout_all: function(headers){
+                return $http.delete('/api/v1/sessions/destroy_all?session_token=' + headers.session_token );
             },
 
             login_with_facebook: function(user){

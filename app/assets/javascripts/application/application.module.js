@@ -58,6 +58,11 @@
                     templateUrl: 'application/templates/sessions/logout.html',
                     controller: 'SessionsController'
                 })
+                .state('logout_all',{
+                    url: '/logout_all',
+                    templateUrl: 'application/templates/sessions/logout_all.html',
+                    controller: 'SessionsController'
+                })
     }]);
 
     IceApp.run(['$http', '$rootScope', function($http, $rootScope){

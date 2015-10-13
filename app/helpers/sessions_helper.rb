@@ -24,6 +24,12 @@ module SessionsHelper
       self.current_user = nil
   end
 
+  def destroy_all
+      current_session.user.sessions.destroy_all if current_session
+      cookies.permanent[:session_token] = nil
+      self.current_user = nil
+  end
+
   def current_user=(user)
     @current_user = user
   end

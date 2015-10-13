@@ -1,12 +1,12 @@
 .row
   .col-md-7
     .btn.btn-success.btn-sm
-      | POST
+      | PUT
     .btn.btn-default.btn-sm
-      | api/v1/users.json
+      | api/v1/users/edit_profile
     br
     h3
-      | Creates a new User
+      | Update Profile of Current User
   .col-md-5
     h5
       | Possible responses:
@@ -78,8 +78,9 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
                   i.glyphicon.glyphicon-calendar
           td multipart/form-data
           td
-            span.model-signature date ("Mon Oct 19 2015 00:00:00 GMT+0300 (EEST)", "10/12/2001", etc)
+            span.model-signature date
           td
+            | ("Mon Oct 19 2015 00:00:00 GMT+0300 (EEST)", "10/12/2001", etc)
         tr
           td.code.required user_name
           td

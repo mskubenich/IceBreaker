@@ -107,5 +107,38 @@
                     };
                 }
 
+                if($state.current.name == 'logout_all'){
+                    console.log('here')
+
+                    $scope.session = {};
+                    $scope.headers = {};
+
+                    $scope.submit = function(){
+
+                        $scope.processing = true;
+                        sessions.logout_all($scope.headers)
+                            .success(function(responce_data, code, headers, config){
+                                $scope.response = {
+                                    response: JSON.stringify(responce_data, null, 2),
+                                    code: JSON.stringify(code, null, 2),
+                                    headers: JSON.stringify(headers, null, 2),
+                                    config: JSON.stringify(config, null, 2)
+                                };
+                                $scope.submited = true;
+                                $scope.processing = false;
+                            })
+                            .error(function(responce_data, code, headers, config){
+                                $scope.response = {
+                                    response: JSON.stringify(responce_data, null, 2),
+                                    code: JSON.stringify(code, null, 2),
+                                    headers: JSON.stringify(headers, null, 2),
+                                    config: JSON.stringify(config, null, 2)
+                                };
+                                $scope.submited = true;
+                                $scope.processing = false;
+                            })
+                    };
+                }
+
             }])
 }());

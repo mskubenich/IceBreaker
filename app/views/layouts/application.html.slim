@@ -49,6 +49,9 @@ html(lang="en")
                         li role="presentation" ng-class="{'active' : $state.current.name == 'logout' }"
                           a href="#logout"
                             | Logout
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'logout_all' }"
+                          a href="#logout_all"
+                            | Destoy All Sessions
         .col-md-9
           div ui-view=true
 
