@@ -29,8 +29,12 @@ class Api::V1::SessionsController < Api::V1Controller
         service.avatar = facebook_params[:facebook_avatar]
       end
 
-      @service.user ||= @user
-      @service.user.save
+      if @service.user
+        @service.user.update_attributes user_params
+      else
+        @service.user = @user
+        @service.user.save
+      end
 
       @service.update_attribute :user_id, @user.id
 
