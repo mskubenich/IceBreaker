@@ -1,0 +1,108 @@
+.confirmation-dialog {
+  width: 40%;
+  display: block;
+  font-weight: bold;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 150px;
+  border-radius: 5px;
+  padding: 0 5%;
+  text-align: center;
+  color: #F0F0F0 ;
+  font-size: 20px;
+  background-position: 10px center;
+  background-image: url('ice_baby.png');
+  min-height: 125px;
+
+  .confirmed-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+		
+    p {
+      position: absolute;
+      width: 100%;
+
+    	&:first-child {
+        top: 0;
+    	}
+
+    	&:nth-child(2) {
+        bottom: 50px;
+    	}
+
+    	&:nth-child(3) {
+        bottom: 0;
+        margin-bottom: 10px;
+      }
+    }
+
+    span {
+      bottom: 10px;
+      width: 115px;
+      height: 35px;
+      display: block;
+      position: absolute;
+      background-repeat: no-repeat;
+    }
+
+    #play-store {
+      background-image: url('play-store.png');
+      left: 0;
+      background-size: 115px 35px;
+    }
+
+    #apple-store {
+      background-image: url('apple-store.svg');
+      right: 0;
+      background-size: 115px 35px;
+    }
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1200px) {
+  .confirmation-dialog {
+    width: 30%;
+    font-size: 20px;
+  }
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+  .confirmation-dialog {
+    width: 50%;
+    font-size: 20px;
+  }
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+  .confirmation-dialog {
+    width: 50%;
+    font-size: 14px;
+    height: 37%;
+	}
+}
+
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  .confirmation-dialog {
+    width: 80%;
+    font-size: 14px;
+    height: 20%;
+	}
+}
+
+@media (max-width: 320px) {
+  .confirmation-dialog {
+    width: 80%;
+    font-size: 13px;
+    height: 25%;
+  }
+}

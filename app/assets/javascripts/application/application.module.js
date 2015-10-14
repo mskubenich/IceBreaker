@@ -63,6 +63,11 @@
                     templateUrl: 'application/templates/sessions/logout_all.html',
                     controller: 'SessionsController'
                 })
+                .state('forgot_password',{
+                    url: '/forgot_password',
+                    templateUrl: 'application/templates/passwords/forgot_password.html',
+                    controller: 'PasswordsController'
+                })
     }]);
 
     IceApp.run(['$http', '$rootScope', function($http, $rootScope){

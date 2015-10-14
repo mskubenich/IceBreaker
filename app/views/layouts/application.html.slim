@@ -52,6 +52,19 @@ html(lang="en")
                         li role="presentation" ng-class="{'active' : $state.current.name == 'logout_all' }"
                           a href="#logout_all"
                             | Destoy All Sessions
+
+            ul.nav.nav-pills.nav-stacked
+              li
+                a data-toggle="collapse" data-target="#collapsePasswords" aria-expanded="false" aria-controls="collapseExample"
+                  | Passwords:
+                br
+                .collapse#collapsePasswords
+                  .well
+                    .sidebar-nav style="padding: 0"
+                      ul.nav.nav-pills.nav-stacked
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'forgot_password' }"
+                          a href="#forgot_password"
+                            | Forgot Password
         .col-md-9
           div ui-view=true
 

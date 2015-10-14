@@ -31,7 +31,17 @@ class User < ActiveRecord::Base
     super
   end
 
+  def send_reset_password_instructions(options={})
+    new_password = generate_random_string
+    update_attributes reset_password_token: new_password
+    UserMailer.forgot_password(self, new_password, path: options[:path]).deliver
+  end
+
   private
+
+  def generate_random_string
+    (0...23).map { (('a'..'z').to_a + ('A'..'Z').to_a).to_a[rand(52)] }.join
+  end
 
   def encrypt_password
     self.salt = make_salt if salt.blank?
