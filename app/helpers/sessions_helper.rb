@@ -1,7 +1,7 @@
 module SessionsHelper
   def sign_in(user)
     @current_session = user.sessions.create
-    cookies.permanent[:session_token] = @current_session.token
+    # cookies.permanent[:session_token] = @current_session.token
     self.current_user = user
     current_session
   end
@@ -20,13 +20,13 @@ module SessionsHelper
 
   def sign_out
       current_session.destroy if current_session
-      cookies.permanent[:session_token] = nil
+      # cookies.permanent[:session_token] = nil
       self.current_user = nil
   end
 
   def destroy_all
       current_session.user.sessions.destroy_all if current_session
-      cookies.permanent[:session_token] = nil
+      # cookies.permanent[:session_token] = nil
       self.current_user = nil
   end
 

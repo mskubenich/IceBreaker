@@ -8,4 +8,10 @@ class UserMailer < ActionMailer::Base
     @path = options[:path]
     mail(to: @user.email, subject: 'New password for IceBr8kr account')
   end
+
+  def feedback(user, body)
+    @user = user
+    @body = body
+    mail(to: ENV['FEEDBACK_EMAIL'], subject: "IceBr8kr Feedback")
+  end
 end

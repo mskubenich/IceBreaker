@@ -1,0 +1,10 @@
+p
+  | User&nbsp;
+  = @user.user_name
+  | (
+  = @user.email
+  | )&nbsp;
+  | sent feedback:
+br
+p
+  = @body

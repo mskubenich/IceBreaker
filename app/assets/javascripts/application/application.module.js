@@ -68,6 +68,11 @@
                     templateUrl: 'application/templates/passwords/forgot_password.html',
                     controller: 'PasswordsController'
                 })
+                .state('feedback',{
+                    url: '/feedback',
+                    templateUrl: 'application/templates/feedback/new.html',
+                    controller: 'FeedbackController'
+                })
     }]);
 
     IceApp.run(['$http', '$rootScope', function($http, $rootScope){

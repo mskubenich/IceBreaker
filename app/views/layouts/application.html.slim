@@ -16,7 +16,7 @@ html(lang="en")
           .sidebar-nav style="padding: 0"
 
             ul.nav.nav-pills.nav-stacked
-              li
+              li.active
                 a data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false" aria-controls="collapseExample"
                   | Users:
                 br
@@ -32,7 +32,7 @@ html(lang="en")
                             | Edit Profile
 
             ul.nav.nav-pills.nav-stacked
-              li
+              li.active
                 a data-toggle="collapse" data-target="#collapseSessions" aria-expanded="false" aria-controls="collapseExample"
                   | Sessions:
                 br
@@ -54,7 +54,7 @@ html(lang="en")
                             | Destoy All Sessions
 
             ul.nav.nav-pills.nav-stacked
-              li
+              li.active
                 a data-toggle="collapse" data-target="#collapsePasswords" aria-expanded="false" aria-controls="collapseExample"
                   | Passwords:
                 br
@@ -65,6 +65,19 @@ html(lang="en")
                         li role="presentation" ng-class="{'active' : $state.current.name == 'forgot_password' }"
                           a href="#forgot_password"
                             | Forgot Password
+
+            ul.nav.nav-pills.nav-stacked
+              li.active
+                a data-toggle="collapse" data-target="#collapseFeedback" aria-expanded="false" aria-controls="collapseExample"
+                  | Feedback:
+                br
+                .collapse#collapseFeedback
+                  .well
+                    .sidebar-nav style="padding: 0"
+                      ul.nav.nav-pills.nav-stacked
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'feedback' }"
+                          a href="#feedback"
+                            | Feedback
         .col-md-9
           div ui-view=true
 

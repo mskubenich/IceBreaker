@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         end
       end
       resources :passwords, only: [:create]
+      resources :feedback, only: [:create]
     end
   end
 

@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
     UserMailer.forgot_password(self, new_password, path: options[:path]).deliver
   end
 
+  def send_feedback(message)
+    UserMailer.feedback(self, message).deliver
+  end
+
   private
 
   def generate_random_string
