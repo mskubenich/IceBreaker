@@ -93,6 +93,11 @@
                     templateUrl: 'application/templates/messages/unread.html',
                     controller: 'MessagesController'
                 })
+                .state('send_message',{
+                    url: '/send_message',
+                    templateUrl: 'application/templates/messages/create.html',
+                    controller: 'MessagesController'
+                })
     }]);
 
     IceApp.run(['$http', '$rootScope', function($http, $rootScope){

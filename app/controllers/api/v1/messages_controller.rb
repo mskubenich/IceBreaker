@@ -7,4 +7,19 @@ class Api::V1::MessagesController < Api::V1Controller
       render json: { message: 'You have no unread messages' }
     end
   end
+
+  def create
+    @opponent = User.where( id: params[:opponent_id]).try :first
+
+    render json: {errors: ['Can\'t find opponent by id.']}, status: :unprocessable_entity and return
+
+    @conversation = Conversation.between_users initiator: current_user, opponent: @opponent
+
+    @message = @conversation.messages.create text: params[:message], author_id: current_user.id
+    if @message.save
+      render json: {message: 'Message sent.'}
+    else
+      render json: {errors: @message.errors}, status: :unprocessable_entity
+    end
+  end
 end

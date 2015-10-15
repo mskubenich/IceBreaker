@@ -41,5 +41,33 @@
                             })
                     };
                 }
+                if($state.current.name == 'send_message'){
+
+                    $scope.submit = function(){
+
+                        $scope.processing = true;
+                        messages.send($scope.message)
+                            .success(function(responce_data, code, headers, config){
+                                $scope.response = {
+                                    response: JSON.stringify(responce_data, null, 2),
+                                    code: JSON.stringify(code, null, 2),
+                                    headers: JSON.stringify(headers, null, 2),
+                                    config: JSON.stringify(config, null, 2)
+                                };
+                                $scope.submited = true;
+                                $scope.processing = false;
+                            })
+                            .error(function(responce_data, code, headers, config){
+                                $scope.response = {
+                                    response: JSON.stringify(responce_data, null, 2),
+                                    code: JSON.stringify(code, null, 2),
+                                    headers: JSON.stringify(headers, null, 2),
+                                    config: JSON.stringify(config, null, 2)
+                                };
+                                $scope.submited = true;
+                                $scope.processing = false;
+                            })
+                    };
+                }
             }])
 }());
