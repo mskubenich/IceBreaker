@@ -38,6 +38,22 @@ class User < ActiveRecord::Base
     Conversation.where(['initiator_id = :id OR opponent_id = :id', id: self.id])
   end
 
+  def unread_messages
+    messages = Message.arel_table
+    users = User.arel_table
+    conversations = Conversation.arel_table
+
+    query = messages
+                .project(Arel.star)
+                .join(users)
+                .join(conversations)
+                .where(conversations[:initiator_id].eq(self.id)
+                           .or(conversations[:opponent_id].eq(self.id))
+                           .and(messages[:viewed].eq(false)))
+
+    Message.find_by_sql query
+  end
+
   def authenticate(password)
     self.encrypted_password == encrypt(password)
   end

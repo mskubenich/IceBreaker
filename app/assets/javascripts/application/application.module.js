@@ -88,6 +88,11 @@
                     templateUrl: 'application/templates/location/destroy.html',
                     controller: 'LocationController'
                 })
+                .state('unread_messages',{
+                    url: '/unread_messages',
+                    templateUrl: 'application/templates/messages/unread.html',
+                    controller: 'MessagesController'
+                })
     }]);
 
     IceApp.run(['$http', '$rootScope', function($http, $rootScope){

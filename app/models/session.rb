@@ -3,6 +3,8 @@ class Session < ActiveRecord::Base
   before_create :generate_token
   validates :user_id, presence: true
 
+  enum device: ['ios', 'android']
+
   def generate_token
     self.token = encrypt
   end

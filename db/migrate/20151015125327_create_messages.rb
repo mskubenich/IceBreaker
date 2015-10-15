@@ -4,7 +4,8 @@ class CreateMessages < ActiveRecord::Migration
       t.integer :message_type
       t.string :text
       t.references :conversation
-      t.references :user
+      t.references :author
+      t.boolean :viewed, default: false
       t.timestamps
     end
   end

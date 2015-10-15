@@ -23,6 +23,11 @@ Rails.application.routes.draw do
           delete :destroy
         end
       end
+      resources :messages, only: [] do
+        collection do
+          get :unread
+        end
+      end
     end
   end
 

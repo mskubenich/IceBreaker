@@ -25,7 +25,8 @@ ActiveRecord::Schema.define(version: 20151015132348) do
     t.integer  "message_type",    limit: 4
     t.string   "text",            limit: 255
     t.integer  "conversation_id", limit: 4
-    t.integer  "user_id",         limit: 4
+    t.integer  "author_id",       limit: 4
+    t.boolean  "viewed",                      default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

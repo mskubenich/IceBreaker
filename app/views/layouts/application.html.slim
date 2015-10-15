@@ -107,6 +107,19 @@ html(lang="en")
                         li role="presentation" ng-class="{'active' : $state.current.name == 'reset_location' }"
                           a href="#reset_location"
                             | Reset Location
+
+            ul.nav.nav-pills.nav-stacked
+              li.active
+                a data-toggle="collapse" data-target="#collapseMessages" aria-expanded="false" aria-controls="collapseExample"
+                  | Messages:
+                br
+                .collapse#collapseMessages
+                  .well
+                    .sidebar-nav style="padding: 0"
+                      ul.nav.nav-pills.nav-stacked
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'unread_messages' }"
+                          a href="#unread_messages"
+                            | Unread Messages
         .col-md-9
           div ui-view=true
 
