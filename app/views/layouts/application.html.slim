@@ -78,6 +78,35 @@ html(lang="en")
                         li role="presentation" ng-class="{'active' : $state.current.name == 'feedback' }"
                           a href="#feedback"
                             | Feedback
+
+            ul.nav.nav-pills.nav-stacked
+              li.active
+                a data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseExample"
+                  | Search:
+                br
+                .collapse#collapseSearch
+                  .well
+                    .sidebar-nav style="padding: 0"
+                      ul.nav.nav-pills.nav-stacked
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'search' }"
+                          a href="#search"
+                            | Search
+
+            ul.nav.nav-pills.nav-stacked
+              li.active
+                a data-toggle="collapse" data-target="#collapseLocation" aria-expanded="false" aria-controls="collapseExample"
+                  | Location:
+                br
+                .collapse#collapseLocation
+                  .well
+                    .sidebar-nav style="padding: 0"
+                      ul.nav.nav-pills.nav-stacked
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'set_location' }"
+                          a href="#set_location"
+                            | Set Location
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'reset_location' }"
+                          a href="#reset_location"
+                            | Reset Location
         .col-md-9
           div ui-view=true
 

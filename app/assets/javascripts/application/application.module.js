@@ -73,6 +73,21 @@
                     templateUrl: 'application/templates/feedback/new.html',
                     controller: 'FeedbackController'
                 })
+                .state('search',{
+                    url: '/search',
+                    templateUrl: 'application/templates/search/index.html',
+                    controller: 'SearchController'
+                })
+                .state('set_location',{
+                    url: '/set_location',
+                    templateUrl: 'application/templates/location/update.html',
+                    controller: 'LocationController'
+                })
+                .state('reset_location',{
+                    url: '/reset_location',
+                    templateUrl: 'application/templates/location/destroy.html',
+                    controller: 'LocationController'
+                })
     }]);
 
     IceApp.run(['$http', '$rootScope', function($http, $rootScope){

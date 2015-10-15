@@ -1,12 +1,12 @@
 .row
   .col-md-7
     .btn.btn-success.btn-sm
-      | POST
+      | PUT
     .btn.btn-default.btn-sm
-      | api/v1/sessions
+      | api/v1/location
     br
     h3
-      | Login
+      | Set Location
   .col-md-5
     h5
       | Possible responses:
@@ -14,9 +14,28 @@
     | 200 Success
     br
     | 422 Unprocessable Entity
+    br
+    | 401 Unauthorized
 
-form ng-submit="submitUser()" name="UserForm" novalidate=true
+form ng-submit="submit()" novalidate=true
   .form-group.form-group-sm
+
+    table.table.table-striped
+      thead
+        tr
+          th Header
+          th Value
+          th Description
+      tbody.operation-params
+        tr
+          td.code.required session_token
+          td
+            input.form-control type="text" ng-model="location.session_token"
+          td
+            | session token received on&nbsp;
+            a href="#login"
+              | login
+
     table.table.table-striped
       thead
         tr
@@ -27,41 +46,23 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
           th Description
       tbody.operation-params
         tr
-          td.code.required login
+          td.code.required message
           td
-            input.form-control type="text" name="login" ng-model="session.login"
-          td param
-          td
-            span.model-signature string
-          td
-            | email or user_name
-        tr
-          td.code.required password
-          td
-            input.form-control type="text" name="password" ng-model="session.password"
-          td param
+            input.form-control type="text" ng-model="location.latitude"
+          td multipart/form-data
           td
             span.model-signature string
           td
         tr
-          td.code.required device
+          td.code.required message
           td
-            input.form-control type="text" name="password" ng-model="session.device"
-          td param
-          td
-            span.model-signature string
-          td
-            | ios or android
-        tr
-          td.code.required device_token
-          td
-            input.form-control type="text" name="password" ng-model="session.device_token"
-          td param
+            input.form-control type="text" ng-model="location.longitude"
+          td multipart/form-data
           td
             span.model-signature string
           td
         tr
-          td colspan=5
+          td colspan='5'
             input.btn.btn-success type="submit" value="{{ I18n.t('actions.submit') }}"
             i.fa.fa-spinner.fa-pulse ng-show="processing" ng-disabled="processing"
 

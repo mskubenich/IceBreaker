@@ -7,7 +7,7 @@ class Api::V1::UsersController < Api::V1Controller
     @user = User.new user_params
 
     if @user.save
-      sign_in @user
+      sign_in @user, device: params[:device], device_token: params[:device_token]
     else
       render json: {errors: @user.errors.full_messages}, status: :unprocessable_entity and return
     end

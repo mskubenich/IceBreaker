@@ -34,6 +34,12 @@
                 if(user.show_email){
                     fd.append('show_email', user.show_email );
                 }
+                if(user.device){
+                    fd.append('device', user.device );
+                }
+                if(user.device_token){
+                    fd.append('device_token', user.device_token );
+                }
 
                 return $http.post('/api/v1/users', fd, {
                     transformRequest: angular.identity,

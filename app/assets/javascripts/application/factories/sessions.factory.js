@@ -8,6 +8,8 @@
 
                 fd.append('login', session.login );
                 fd.append('password', session.password );
+                fd.append('device', session.device );
+                fd.append('device_token', session.device_token );
 
                 return $http.post('/api/v1/sessions', fd, {
                     transformRequest: angular.identity,
@@ -59,6 +61,12 @@
                 }
                 if(user.facebook_avatar){
                     fd.append('facebook_avatar', user.facebook_avatar );
+                }
+                if(user.device){
+                    fd.append('device', user.device );
+                }
+                if(user.device_token){
+                    fd.append('device_token', user.device_token );
                 }
 
                 return $http.post('/api/v1/sessions/facebook', fd, {

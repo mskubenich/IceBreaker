@@ -11,7 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151014103900) do
+ActiveRecord::Schema.define(version: 20151015132348) do
+
+  create_table "conversations", force: :cascade do |t|
+    t.integer  "initiator_id", limit: 4
+    t.integer  "opponent_id",  limit: 4
+    t.boolean  "in_radius"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "message_type",    limit: 4
+    t.string   "text",            limit: 255
+    t.integer  "conversation_id", limit: 4
+    t.integer  "user_id",         limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "services", force: :cascade do |t|
     t.string  "provider", limit: 255
@@ -21,10 +38,12 @@ ActiveRecord::Schema.define(version: 20151014103900) do
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.string   "token",      limit: 255
-    t.integer  "user_id",    limit: 4
+    t.string   "token",        limit: 255
+    t.integer  "user_id",      limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "device",       limit: 4
+    t.string   "device_token", limit: 255
   end
 
   create_table "users", force: :cascade do |t|
@@ -42,6 +61,9 @@ ActiveRecord::Schema.define(version: 20151014103900) do
     t.datetime "avatar_updated_at"
     t.boolean  "show_email"
     t.string   "reset_password_token", limit: 255
+    t.float    "latitude",             limit: 24
+    t.float    "longitude",            limit: 24
+    t.datetime "location_updated_at"
   end
 
 end

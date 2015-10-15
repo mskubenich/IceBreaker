@@ -16,6 +16,13 @@ Rails.application.routes.draw do
       end
       resources :passwords, only: [:create]
       resources :feedback, only: [:create]
+      resources :search, only: [:index]
+      resources :location, only: [] do
+        collection do
+          put :update
+          delete :destroy
+        end
+      end
     end
   end
 

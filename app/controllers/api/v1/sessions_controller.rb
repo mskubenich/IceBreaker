@@ -7,7 +7,7 @@ class Api::V1::SessionsController < Api::V1Controller
     @user = User.find_by_sql(query.to_sql).try :first
 
     if @user && @user.authenticate(session_params[:password])
-      sign_in @user
+      sign_in @user, device: params[:device], device_token: params[:device_token]
     else
       render json: { errors: ['Wrong login/password combination.'] }, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class Api::V1::SessionsController < Api::V1Controller
 
       @service.update_attribute :user_id, @user.id
 
-      sign_in @user
+      sign_in @user, device: params[:device], device_token: params[:device_token]
     else
       render json: {errors: @service.errors.full_messages + @user.errors.full_messages}, status: :unprocessable_entity and return
     end

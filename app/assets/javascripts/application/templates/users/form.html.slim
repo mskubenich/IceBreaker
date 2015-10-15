@@ -24,6 +24,7 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
           th Value
           th Parameter Type
           th Type
+          th Description
       tbody.operation-params
         tr
           td.code.required first_name
@@ -32,6 +33,7 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
           td multipart/form-data
           td
             span.model-signature string
+          td
         tr
           td.code.required last_name
           td
@@ -39,6 +41,7 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
           td multipart/form-data
           td
             span.model-signature string
+          td
         tr
           td.code.required gender
           td
@@ -47,6 +50,7 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
           td multipart/form-data
           td
             span.model-signature string
+          td
         tr
           td.code date_of_birth
           td
@@ -57,7 +61,9 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
                   i.glyphicon.glyphicon-calendar
           td multipart/form-data
           td
-            span.model-signature date ("Mon Oct 19 2015 00:00:00 GMT+0300 (EEST)", "10/12/2001", etc)
+            span.model-signature date
+          td
+            | ("Mon Oct 19 2015 00:00:00 GMT+0300 (EEST)", "10/12/2001", etc)
         tr
           td.code.required user_name
           td
@@ -65,6 +71,7 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
           td multipart/form-data
           td
             span.model-signature string
+          td
         tr
           td.code.required email
           td
@@ -72,6 +79,7 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
           td multipart/form-data
           td
             span.model-signature string
+          td
         tr
           td.code.required password
           td
@@ -79,6 +87,7 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
           td multipart/form-data
           td
             span.model-signature string
+          td
         tr
           td.code.required password_confirmation
           td
@@ -86,6 +95,7 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
           td multipart/form-data
           td
             span.model-signature string
+          td
         tr
           td.code avatar
           td
@@ -93,6 +103,7 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
           td multipart/form-data
           td
             span.model-signature file
+          td
         tr
           td.code show_email
           td
@@ -100,8 +111,26 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
           td multipart/form-data
           td
             span.model-signature boolean
+          td
         tr
-          td colspan='4'
+          td.code device
+          td
+            div image=true ng-model="user.device"
+          td multipart/form-data
+          td
+            span.model-signature string
+          td
+        tr
+          td.code device_token
+          td
+            input type='checkbox' ng-model="user.device_token"
+          td multipart/form-data
+          td
+            span.model-signature string
+          td
+            | token for push notifications
+        tr
+          td colspan='5'
             input.btn.btn-success type="submit" value="{{ I18n.t('actions.submit') }}"
             i.fa.fa-spinner.fa-pulse ng-show="processing" ng-disabled="processing"
 
