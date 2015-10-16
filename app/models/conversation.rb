@@ -40,4 +40,8 @@ class Conversation < ActiveRecord::Base
   def done?
     messages.count == 3
   end
+
+  def last_message
+    messages.order('created_at DESC').try :first
+  end
 end

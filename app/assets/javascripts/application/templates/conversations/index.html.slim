@@ -1,0 +1,79 @@
+.row
+  .col-md-7
+    .btn.btn-success.btn-sm
+      | GET
+    .btn.btn-default.btn-sm
+      | api/v1/conversations
+    br
+    h3
+      | Conversations History
+  .col-md-5
+    h5
+      | Possible responses:
+    br
+    | 200 Success
+    br
+    | 422 Unprocessable Entity
+    br
+    | 401 Unauthorized
+
+form ng-submit="submit()" novalidate=true
+  .form-group.form-group-sm
+
+    table.table.table-striped
+      thead
+        tr
+          th Header
+          th Value
+          th Description
+      tbody.operation-params
+        tr
+          td.code.required Session-Token
+          td
+            input.form-control type="text" ng-model="conversation.session_token"
+          td
+            | session token received on&nbsp;
+            a href="#login"
+              | login
+
+    table.table.table-striped
+      thead
+        tr
+          th Parameter
+          th Value
+          th Parameter Type
+          th Type
+          th Description
+      tbody.operation-params
+        tr
+          td.code.required page
+          td
+            input.form-control type="text" ng-model="conversation.page"
+          td param
+          td
+            span.model-signature integer
+          td
+            | 1 by default
+        tr
+          td.code.required per_page
+          td
+            input.form-control type="text" ng-model="conversation.per_page"
+          td param
+          td
+            span.model-signature integer
+          td
+            | 10 by default
+        tr
+          td colspan='5'
+            input.btn.btn-success type="submit" value="{{ I18n.t('actions.submit') }}"
+            i.fa.fa-spinner.fa-pulse ng-show="processing" ng-disabled="processing"
+
+.response ng-show="response"
+  h5 Response Code:
+  div hljs=true source="response.code" no-escape=true
+  h5 Response:
+  div hljs=true source="response.response"
+  h5 Headers:
+  div hljs=true source="response.headers"
+  h5 Config:
+  div hljs=true source="response.config"

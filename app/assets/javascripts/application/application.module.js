@@ -98,6 +98,11 @@
                     templateUrl: 'application/templates/messages/new.html',
                     controller: 'MessagesController'
                 })
+                .state('conversations',{
+                    url: '/conversations',
+                    templateUrl: 'application/templates/conversations/index.html',
+                    controller: 'ConversationsController'
+                })
     }]);
 
     IceApp.run(['$http', '$rootScope', function($http, $rootScope){

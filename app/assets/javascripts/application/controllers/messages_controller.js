@@ -43,6 +43,8 @@
                 }
                 if($state.current.name == 'send_message'){
 
+                    $scope.message = {};
+
                     $scope.submit = function(){
 
                         $scope.processing = true;
