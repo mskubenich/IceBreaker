@@ -115,7 +115,7 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
         tr
           td.code device
           td
-            div image=true ng-model="user.device"
+            input.form-control type='text' ng-model="user.device"
           td multipart/form-data
           td
             span.model-signature string
@@ -123,7 +123,7 @@ form ng-submit="submitUser()" name="UserForm" novalidate=true
         tr
           td.code device_token
           td
-            input type='checkbox' ng-model="user.device_token"
+            input.form-control type='text' ng-model="user.device_token"
           td multipart/form-data
           td
             span.model-signature string
