@@ -146,6 +146,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def in_radius?(opponent)
+    User.near([self.latitude, self.longitude], User::DISTANCE_IN_RADIUS).where(id: opponent.id).present?
+  end
+
   private
 
   def update_location_timestamp

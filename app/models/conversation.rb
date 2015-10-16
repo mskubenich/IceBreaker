@@ -6,6 +6,9 @@ class Conversation < ActiveRecord::Base
   scope :out_of_radius, ->  { where(in_radius: false) }
   scope :in_radius,     ->  { where(in_radius: true) }
 
+  belongs_to :initiator, class_name: User, foreign_key: :initiator_id
+  belongs_to :opponent, class_name: User, foreign_key: :opponent_id
+
   MUTED_TIME = 5.hours
 
   def initial_message

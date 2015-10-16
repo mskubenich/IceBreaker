@@ -95,7 +95,7 @@
                 })
                 .state('send_message',{
                     url: '/send_message',
-                    templateUrl: 'application/templates/messages/create.html',
+                    templateUrl: 'application/templates/messages/new.html',
                     controller: 'MessagesController'
                 })
     }]);

@@ -12,14 +12,13 @@ html(lang="en")
         .navbar-collapse.collapse.navbar-responsive-collapse
     .container ng-controller="HomeController"
       .row
-        .col-md-3
+        .col-md-3.col-sm-3
           .sidebar-nav style="padding: 0"
 
             ul.nav.nav-pills.nav-stacked
-              li.active
+              li
                 a data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false" aria-controls="collapseExample"
                   | Users:
-                br
                 .collapse#collapseUsers
                   .well
                     .sidebar-nav style="padding: 0"
@@ -32,10 +31,9 @@ html(lang="en")
                             | Edit Profile
 
             ul.nav.nav-pills.nav-stacked
-              li.active
+              li
                 a data-toggle="collapse" data-target="#collapseSessions" aria-expanded="false" aria-controls="collapseExample"
                   | Sessions:
-                br
                 .collapse#collapseSessions
                   .well
                     .sidebar-nav style="padding: 0"
@@ -54,10 +52,9 @@ html(lang="en")
                             | Destoy All Sessions
 
             ul.nav.nav-pills.nav-stacked
-              li.active
+              li
                 a data-toggle="collapse" data-target="#collapsePasswords" aria-expanded="false" aria-controls="collapseExample"
                   | Passwords:
-                br
                 .collapse#collapsePasswords
                   .well
                     .sidebar-nav style="padding: 0"
@@ -67,10 +64,9 @@ html(lang="en")
                             | Forgot Password
 
             ul.nav.nav-pills.nav-stacked
-              li.active
+              li
                 a data-toggle="collapse" data-target="#collapseFeedback" aria-expanded="false" aria-controls="collapseExample"
                   | Feedback:
-                br
                 .collapse#collapseFeedback
                   .well
                     .sidebar-nav style="padding: 0"
@@ -80,10 +76,9 @@ html(lang="en")
                             | Feedback
 
             ul.nav.nav-pills.nav-stacked
-              li.active
+              li
                 a data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseExample"
                   | Search:
-                br
                 .collapse#collapseSearch
                   .well
                     .sidebar-nav style="padding: 0"
@@ -93,10 +88,9 @@ html(lang="en")
                             | Search
 
             ul.nav.nav-pills.nav-stacked
-              li.active
+              li
                 a data-toggle="collapse" data-target="#collapseLocation" aria-expanded="false" aria-controls="collapseExample"
                   | Location:
-                br
                 .collapse#collapseLocation
                   .well
                     .sidebar-nav style="padding: 0"
@@ -109,10 +103,9 @@ html(lang="en")
                             | Reset Location
 
             ul.nav.nav-pills.nav-stacked
-              li.active
+              li
                 a data-toggle="collapse" data-target="#collapseMessages" aria-expanded="false" aria-controls="collapseExample"
                   | Messages:
-                br
                 .collapse#collapseMessages
                   .well
                     .sidebar-nav style="padding: 0"
@@ -120,7 +113,10 @@ html(lang="en")
                         li role="presentation" ng-class="{'active' : $state.current.name == 'unread_messages' }"
                           a href="#unread_messages"
                             | Unread Messages
-        .col-md-9
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'send_message' }"
+                          a href="#send_message"
+                            | Send Message
+        .col-md-9.col-sm-9
           div ui-view=true
 
     footer

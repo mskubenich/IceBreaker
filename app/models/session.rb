@@ -27,3 +27,13 @@ class Session < ActiveRecord::Base
     self.user.reset_login_attempts
   end
 end
+
+#
+# login crash
+# set location crash NoMethodError (undefined method `address=' for #<User:0x0000000382ec60>):
+#
+# remove avatar password from lwf
+# merge accounts
+
+# update user
+# ok true

@@ -19,7 +19,7 @@ class Message < ActiveRecord::Base
   end
 
   def validate_radius
-    self.errors.add :base, 'User is out of radius.' unless conversation.initiator.in_radius? conversation.opponent.id
+    self.errors.add :base, 'User is out of radius.' unless conversation.initiator.in_radius? conversation.opponent
   end
 
   def validate_message_type
