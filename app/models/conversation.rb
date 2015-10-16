@@ -1,5 +1,5 @@
 class Conversation < ActiveRecord::Base
-  has_many :messages
+  has_many :messages, -> { order('created_at DESC') }
 
   scope :unfinished,    ->  { where('(SELECT id FROM messages WHERE messages.conversation_id = conversations.id) = 3') }
   scope :active,        ->  { where(created_at: Time.zone.now - 1.months..Time.zone.now) }
@@ -43,5 +43,15 @@ class Conversation < ActiveRecord::Base
 
   def last_message
     messages.order('created_at DESC').try :first
+  end
+
+  def opponent_to(user)
+    if user.id == self.initiator_id
+      self.opponent
+    elsif user.id == self.opponent_id
+      self.initiator
+    else
+      nil
+    end
   end
 end

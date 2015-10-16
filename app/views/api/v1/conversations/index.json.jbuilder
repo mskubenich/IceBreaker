@@ -4,7 +4,7 @@ json.conversations @conversations do |conversation|
   json.updated_at conversation.updated_at
   json.finished conversation.done?
 
-  opponent = conversation.opponent current_user
+  opponent = conversation.opponent_to current_user
   json.opponent do
     json.id opponent.id
     json.first_name opponent.first_name

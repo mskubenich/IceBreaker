@@ -128,6 +128,9 @@ html(lang="en")
                         li role="presentation" ng-class="{'active' : $state.current.name == 'conversations' }"
                           a href="#conversations"
                             | History
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'conversation' }"
+                          a href="#conversation"
+                            | Conversation Detail
         .col-md-9.col-sm-9
           div ui-view=true
 

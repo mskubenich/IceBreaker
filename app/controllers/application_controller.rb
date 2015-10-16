@@ -36,6 +36,10 @@ class ApplicationController < ActionController::Base
       render json: {errors: ['Invalid request.'], message: e.message }, status: :unprocessable_entity and return
     end
 
+    if e.kind_of? ActiveRecord::RecordNotFound
+      render json: {errors: ['Record not found.'], message: e.message }, status: :unprocessable_entity and return
+    end
+
     # ErrorMessage.create(
     #     class_name: e.class,
     #     message: e.message,
