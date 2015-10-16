@@ -20,27 +20,33 @@ class Api::V1::SessionsController < Api::V1Controller
 
   def facebook
     @service = Service.facebook.new uid: facebook_params[:facebook_uid], avatar: facebook_params[:facebook_avatar]
-    @user = User.new user_params
-    @user.services << @service
 
-    if @service.valid? && @user.valid?
+    if @service.valid?
 
       @service = Service.facebook.where(uid: facebook_params[:facebook_uid]).first_or_create do |service|
         service.avatar = facebook_params[:facebook_avatar]
       end
 
       if @service.user
-        @service.user.update_attributes user_params
+        @user = @service.user
+        @user.assign_attributes user_params
       else
-        @service.user = @user
-        @service.user.save
+        @user = User.find_by_email params[:email]
+        if @user
+          @user.assign_attributes user_params
+        else
+          @service.user = @user
+        end
       end
 
-      @service.update_attribute :user_id, @user.id
-
-      sign_in @user, device_params
+      if @user.save
+        @service.update_attribute :user_id, @user.id
+        sign_in @user, device_params
+      else
+        render json: {errors: @service.errors.full_messages}, status: :unprocessable_entity and return
+      end
     else
-      render json: {errors: @service.errors.full_messages + @user.errors.full_messages}, status: :unprocessable_entity and return
+      render json: {errors: @service.errors.full_messages}, status: :unprocessable_entity and return
     end
   end
 

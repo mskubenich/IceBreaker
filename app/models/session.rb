@@ -27,8 +27,3 @@ class Session < ActiveRecord::Base
     self.user.reset_login_attempts
   end
 end
-
-# merge accounts
-
-# update user
-# ok true
