@@ -21,8 +21,10 @@ class Api::V1::SessionsController < Api::V1Controller
   def facebook
     @service = Service.facebook.new uid: facebook_params[:facebook_uid], avatar: facebook_params[:facebook_avatar]
     @user = User.new user_params
+    @user.services << @service
 
     if @service.valid? && @user.valid?
+
       @service = Service.facebook.where(uid: facebook_params[:facebook_uid]).first_or_create do |service|
         service.avatar = facebook_params[:facebook_avatar]
       end
@@ -49,10 +51,7 @@ class Api::V1::SessionsController < Api::V1Controller
                   :last_name,
                   :user_name,
                   :email,
-                  :avatar,
                   :date_of_birth,
-                  :password,
-                  :password_confirmation,
                   :gender,
                   :show_email
   end

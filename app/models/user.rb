@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :first_name, :last_name, :user_name
 
-  validates :password, presence: true, confirmation: true, if: lambda { new_record? || password }, length: { in: 6..20 }
+  validates :password, presence: true, confirmation: true, length: { in: 6..20 }, if: lambda { services.blank? ? (new_record? || password) : false }
 
   validates :gender, inclusion: { in: ['male', 'female'], message: 'can be only male/female'}, presence: true
 
