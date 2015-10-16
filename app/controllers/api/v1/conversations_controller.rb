@@ -14,7 +14,7 @@ class Api::V1::ConversationsController < Api::V1Controller
   end
 
   def show
-
+    @conversation = Conversation.find params[:id]
   end
 
   def destroy

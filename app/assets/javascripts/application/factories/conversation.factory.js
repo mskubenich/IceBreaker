@@ -11,7 +11,7 @@
                 return $http.get('/api/v1/conversations?session_token=' + session_token + '&per_page=' + per_page + '&page=' + page)
             },
             show: function(conversation){
-                return $http.get('/api/v1/conversations/' + conversation.id + '?session_token=' + conversation.session_token)
+                return $http.get('/api/v1/conversations/' + conversation.id + '.json?session_token=' + conversation.session_token)
             },
             remove: function(conversation){
                 return $http.delete('/api/v1/conversations/' + conversation.id + '?session_token=' + conversation.session_token)

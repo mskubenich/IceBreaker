@@ -27,19 +27,15 @@ class ApplicationController < ActionController::Base
   end
 
   def catch_exceptions(e)
-
-    if e.class == CanCan::AccessDenied
-      respond_with_errors
+    case e.class
+      when CanCan::AccessDenied
+        respond_with_errors
+      when ActiveRecord::UnknownAttributeError
+        render json: {errors: ['Invalid request.'], message: e.message }, status: :unprocessable_entity and return
+      when ActiveRecord::RecordNotFound
+        render json: {errors: ['Record not found.'], message: e.message }, status: :unprocessable_entity and return
+      else
+        raise
     end
-
-    if e.kind_of? ActiveRecord::UnknownAttributeError
-      render json: {errors: ['Invalid request.'], message: e.message }, status: :unprocessable_entity and return
-    end
-
-    if e.kind_of? ActiveRecord::RecordNotFound
-      render json: {errors: ['Record not found.'], message: e.message }, status: :unprocessable_entity and return
-    end
-
-    # raise
   end
 end

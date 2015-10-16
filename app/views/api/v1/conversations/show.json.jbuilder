@@ -4,8 +4,9 @@ json.conversation do
   json.updated_at @conversation.updated_at
   json.finished @conversation.done?
   json.status @conversation.status
-  json.removed_by conversation.removed_by if conversation.removed?
-
+  if @conversation.removed?
+    json.removed_by @conversation.removed_by
+  end
   opponent = @conversation.opponent_to current_user
   json.opponent do
     json.id opponent.id
@@ -16,7 +17,7 @@ json.conversation do
     json.avatar opponent.avatar.exists? ? opponent.avatar.url : opponent.services.facebook.first.try(:avatar)
     json.id opponent.id
     json.id opponent.id
-  end
+  end if opponent
 
   json.messages @conversation.messages do |message|
     json.author    message.author_id == current_user.id ? 'I' : 'He'
