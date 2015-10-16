@@ -73,7 +73,8 @@ class User < ActiveRecord::Base
   end
 
   def set_location(lat, lng)
-    self.update_attributes(latitude: lat.gsub(',', '.'), longitude: lng.gsub(',', '.'))
+    self.update_attributes latitude: lat.gsub(',', '.'),
+                           longitude: lng.gsub(',', '.')
   end
 
   def reset_location

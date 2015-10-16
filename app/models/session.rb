@@ -28,9 +28,6 @@ class Session < ActiveRecord::Base
   end
 end
 
-
-# set location crash NoMethodError (undefined method `address=' for #<User:0x0000000382ec60>):
-#
 # remove avatar password from lwf
 # merge accounts
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151015132348) do
+ActiveRecord::Schema.define(version: 20151016120246) do
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "initiator_id", limit: 4
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20151015132348) do
     t.float    "latitude",             limit: 24
     t.float    "longitude",            limit: 24
     t.datetime "location_updated_at"
+    t.string   "address",              limit: 255
   end
 
 end
