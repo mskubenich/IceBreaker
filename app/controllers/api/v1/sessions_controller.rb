@@ -7,7 +7,7 @@ class Api::V1::SessionsController < Api::V1Controller
     @user = User.find_by_sql(query.to_sql).try :first
 
     if @user && @user.authenticate(session_params[:password])
-      sign_in @user, device: params[:device], device_token: params[:device_token]
+      sign_in @user, device_params
     else
       render json: { errors: ['Wrong login/password combination.'] }, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class Api::V1::SessionsController < Api::V1Controller
 
       @service.update_attribute :user_id, @user.id
 
-      sign_in @user, device: params[:device], device_token: params[:device_token]
+      sign_in @user, device_params
     else
       render json: {errors: @service.errors.full_messages + @user.errors.full_messages}, status: :unprocessable_entity and return
     end
@@ -63,6 +63,13 @@ class Api::V1::SessionsController < Api::V1Controller
 
   def facebook_params
     params.permit(:facebook_uid, :facebook_avatar)
+  end
+
+  def device_params
+    {
+        device: ['ios', 'android'].include?(params[:device]) ? params[:device] : nil,
+        device_token: params[:device_token]
+    }
   end
 
 end
