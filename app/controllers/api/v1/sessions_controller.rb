@@ -18,6 +18,11 @@ class Api::V1::SessionsController < Api::V1Controller
     render nothing: true
   end
 
+  def destroy_all
+    current_user.sessions.destroy_all
+    render nothing: true
+  end
+
   def facebook
     @service = Service.facebook.new uid: facebook_params[:facebook_uid], avatar: facebook_params[:facebook_avatar]
 

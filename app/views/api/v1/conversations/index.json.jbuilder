@@ -24,7 +24,7 @@ json.conversations @conversations do |conversation|
     json.author_id last_message.author_id
     json.text last_message.text
     json.viewed last_message.viewed
-  end
+  end if last_message
 end
 json.page @page
 json.total @total

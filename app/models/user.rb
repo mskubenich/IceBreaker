@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
                 .join(conversations)
                 .where(conversations[:initiator_id].eq(self.id)
                            .or(conversations[:opponent_id].eq(self.id))
-                           .and(messages[:viewed].eq(false)))
+                           .and(messages[:viewed].eq(false))).group(messages[:id])
 
     Message.find_by_sql query
   end

@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
 
   def catch_exceptions(e)
 
-    if e.kind_of? CanCan::AccessDenied
+    if e.class == CanCan::AccessDenied
       respond_with_errors
     end
 
@@ -40,17 +40,6 @@ class ApplicationController < ActionController::Base
       render json: {errors: ['Record not found.'], message: e.message }, status: :unprocessable_entity and return
     end
 
-    # ErrorMessage.create(
-    #     class_name: e.class,
-    #     message: e.message,
-    #     trace: e.backtrace.join("\n"),
-    #     params: params,
-    #     headers: request.headers,
-    #     cookies: cookies.to_json,
-    #     user_agent: request.user_agent,
-    #     request: request.inspect
-    # )
-
-    raise
+    # raise
   end
 end

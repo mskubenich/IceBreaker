@@ -6,9 +6,7 @@ json.users_in_radius @users_in_radius do |user|
   json.gender      user.gender
   json.latitude    user.latitude
   json.longitude   user.longitude
-  json.avatar      user.avatar.exist? ? user.avatar.url(:thumb) : user.services.facebook.try(:first).try(:avatar)
-  json.blocked     user.blocked_to(current_user)
-  json.status      user.search_results(current_user)
+  json.avatar      user.avatar.exists? ? user.avatar.url(:thumb) : user.services.facebook.try(:first).try(:avatar)
 end
 
 json.users_out_of_radius @users_out_of_radius do |user|
@@ -19,5 +17,5 @@ json.users_out_of_radius @users_out_of_radius do |user|
   json.gender      user.gender
   json.latitude    user.latitude
   json.longitude   user.longitude
-  json.avatar      user.avatar.exist? ? user.avatar.url(:thumb) : user.services.facebook.try(:first).try(:avatar)
+  json.avatar      user.avatar.exists? ? user.avatar.url(:thumb) : user.services.facebook.try(:first).try(:avatar)
 end
