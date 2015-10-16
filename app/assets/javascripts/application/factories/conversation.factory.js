@@ -12,6 +12,9 @@
             },
             show: function(conversation){
                 return $http.get('/api/v1/conversations/' + conversation.id + '?session_token=' + conversation.session_token)
+            },
+            remove: function(conversation){
+                return $http.delete('/api/v1/conversations/' + conversation.id + '?session_token=' + conversation.session_token)
             }
         }
     }])

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016120246) do
+ActiveRecord::Schema.define(version: 20151016144949) do
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "initiator_id", limit: 4
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20151016120246) do
     t.boolean  "in_radius"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status",       limit: 4
+    t.integer  "removed_by",   limit: 4
   end
 
   create_table "messages", force: :cascade do |t|

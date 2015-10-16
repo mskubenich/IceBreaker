@@ -28,7 +28,7 @@ Rails.application.routes.draw do
           get :unread
         end
       end
-      resources :conversations, only: [:index, :show]
+      resources :conversations, only: [:index, :show, :destroy]
     end
   end
 

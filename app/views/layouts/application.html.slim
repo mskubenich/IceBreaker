@@ -130,7 +130,10 @@ html(lang="en")
                             | History
                         li role="presentation" ng-class="{'active' : $state.current.name == 'conversation' }"
                           a href="#conversation"
-                            | Conversation Detail
+                            | Detail
+                        li role="presentation" ng-class="{'active' : $state.current.name == 'remove_conversation' }"
+                          a href="#remove_conversation"
+                            | Remove
         .col-md-9.col-sm-9
           div ui-view=true
 

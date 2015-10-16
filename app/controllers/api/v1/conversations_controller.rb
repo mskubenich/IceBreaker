@@ -16,4 +16,9 @@ class Api::V1::ConversationsController < Api::V1Controller
   def show
 
   end
+
+  def destroy
+    @conversation.update_attributes status: :removed, removed_by: current_user.id
+    render nothing: true
+  end
 end

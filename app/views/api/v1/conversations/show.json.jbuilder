@@ -3,6 +3,8 @@ json.conversation do
   json.created_at @conversation.created_at
   json.updated_at @conversation.updated_at
   json.finished @conversation.done?
+  json.status @conversation.status
+  json.removed_by conversation.removed_by if conversation.removed?
 
   opponent = @conversation.opponent_to current_user
   json.opponent do

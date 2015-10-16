@@ -108,6 +108,11 @@
                     templateUrl: 'application/templates/conversations/show.html',
                     controller: 'ConversationsController'
                 })
+                .state('remove_conversation',{
+                    url: '/remove_conversation',
+                    templateUrl: 'application/templates/conversations/remove.html',
+                    controller: 'ConversationsController'
+                })
     }]);
 
     IceApp.run(['$http', '$rootScope', function($http, $rootScope){
