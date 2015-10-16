@@ -28,7 +28,6 @@ class Session < ActiveRecord::Base
   end
 end
 
-# remove avatar password from lwf
 # merge accounts
 
 # update user

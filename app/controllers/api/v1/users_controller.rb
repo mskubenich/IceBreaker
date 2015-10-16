@@ -1,7 +1,7 @@
 class Api::V1::UsersController < Api::V1Controller
 
   load_and_authorize_resource :user
-  skip_before_filter :authenticate_user
+  skip_before_filter :authenticate_user, only: [:create]
 
   def create
     @user = User.new user_params
@@ -16,7 +16,7 @@ class Api::V1::UsersController < Api::V1Controller
   def update_profile
     @user = current_user
     if @user.update_attributes edit_user_params
-      render json: { ok: true }
+
     else
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity and return
     end
