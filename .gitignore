@@ -15,9 +15,11 @@
 /log/*
 !/log/.keep
 /tmp
+.rvmrc
 .idea/*
 public/system/*
 # Ignore application configuration
 /config/application.yml
+config/database.yml
 public/system/*
 public/assets/*
