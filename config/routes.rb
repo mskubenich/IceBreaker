@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create] do
         collection do
           put :update_profile
+          post :update_profile
         end
       end
       resources :sessions, only: [:create] do
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
       resources :location, only: [] do
         collection do
           put :update
+          post :update
           delete :destroy
         end
       end
@@ -41,6 +43,7 @@ Rails.application.routes.draw do
   resources :passwords, only: [] do
     collection do
       put :update
+      post :update
       get :edit
     end
   end
