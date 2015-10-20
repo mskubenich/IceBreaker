@@ -34,7 +34,7 @@ class Api::V1::SessionsController < Api::V1Controller
 
       if @service.user
         @user = @service.user
-        @user.assign_attributes user_params
+        @user.assign_attributes facebook_avatar: facebook_params[:facebook_avatar]
       else
         @user = User.find_by_email params[:email]
         if @user

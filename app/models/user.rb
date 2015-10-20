@@ -181,7 +181,6 @@ class User < ActiveRecord::Base
 end
 
 
-# detail conv opponent emaul
 # не перезатирати facebook
 # mute endpoint
 # коли буває blocked ? 1. коли conversation закінчився і наступний може бути через 5 хв. 2. Коли ти забанив узера на 5 хв. 3. Коли удалити cjnversation - наступний можна почати через 5 хв
