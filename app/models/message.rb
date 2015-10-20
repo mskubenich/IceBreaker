@@ -7,6 +7,7 @@ class Message < ActiveRecord::Base
   validates :text, presence: true
 
   after_validation :validate_message_type, :validate_radius, :validate_muted, :validate_finished
+  after_save :update_conversation
 
   private
 
@@ -33,5 +34,9 @@ class Message < ActiveRecord::Base
       else
         self.errors.add :base, 'Conversation closed.'
     end
+  end
+
+  def update_conversation
+    conversation.update_attributes messages_count: conversation.messages.count
   end
 end

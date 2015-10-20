@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
       when ActiveRecord::RecordNotFound
         render json: {errors: ['Record not found.'], message: e.message }, status: :unprocessable_entity and return
       else
-        raise
+        render json: {errors: [e.message] }, status: :unprocessable_entity and return
     end
   end
 end
