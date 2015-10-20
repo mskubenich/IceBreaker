@@ -1,0 +1,4 @@
+:verbose: false
+:concurrency:  25
+:queues:
+  - [reset_locations_worker, 6]
