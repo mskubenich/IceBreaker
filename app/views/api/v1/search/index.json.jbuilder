@@ -7,6 +7,12 @@ json.users_in_radius @users_in_radius do |user|
   json.latitude    user.latitude
   json.longitude   user.longitude
   json.avatar      user.avatar.exists? ? user.avatar.url(:thumb) : user.services.facebook.try(:first).try(:avatar)
+
+  mute = Mute.between current_user, user
+
+  json.muted !!mute
+  json.muted_to mute ? (mute.created_at) + 5.minutes : ''
+  json.muted_by mute.try(:initiator).try(:id)
 end
 
 json.users_out_of_radius @users_out_of_radius do |user|
