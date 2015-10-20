@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         collection do
           put :update_profile
           post :update_profile
+          post :mute
         end
       end
       resources :sessions, only: [:create] do

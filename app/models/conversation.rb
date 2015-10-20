@@ -33,7 +33,15 @@ class Conversation < ActiveRecord::Base
   end
 
   def muted?
-    done? && ( Time.now - finished_message.created_at < MUTED_TIME )
+    !!mute
+  end
+
+  def muted_by
+    mute.try :initiator
+  end
+
+  def mute
+    Mute.between initiator, opponent
   end
 
   def muted_done?

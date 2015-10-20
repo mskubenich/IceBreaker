@@ -7,6 +7,10 @@ json.conversation do
   if @conversation.removed?
     json.removed_by @conversation.removed_by
   end
+  json.muted @conversation.muted? if @conversation.muted?
+  json.muted_to @conversation.muted.created_at + 5.minutes if @conversation.muted?
+  json.muted_by @conversation.muted_by if @conversation.muted?
+
   opponent = @conversation.opponent_to current_user
   json.opponent do
     json.id opponent.id

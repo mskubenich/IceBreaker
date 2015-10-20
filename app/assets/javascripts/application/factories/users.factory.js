@@ -86,6 +86,18 @@
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
                 });
+            },
+
+            mute: function(user){
+                var fd = new FormData();
+
+                fd.append('session_token', user.session_token ? user.session_token : '' );
+                fd.append('opponent_id', user.opponent_id ? user.opponent_id : '' );
+
+                return $http.post('/api/v1/users/mute', fd, {
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}
+                });
             }
         }
     }])

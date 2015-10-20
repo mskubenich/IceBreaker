@@ -22,6 +22,18 @@ class Api::V1::UsersController < Api::V1Controller
     end
   end
 
+  def mute
+    @user = User.find params[:opponent_id]
+
+    @mute = Mute.new initiator_id: current_user.id, opponent_id: @user.id
+
+    if @mute.save
+      render json: { ok: true }
+    else
+      render json: {errors: @mute.errors.full_messages}, status: :unprocessable_entity
+    end
+  end
+
   private 
 
   def user_params

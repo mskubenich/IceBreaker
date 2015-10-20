@@ -2,3 +2,4 @@
 :concurrency:  25
 :queues:
   - [reset_locations_worker, 6]
+  - [remove_mute_worker, 6]

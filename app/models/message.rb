@@ -12,7 +12,7 @@ class Message < ActiveRecord::Base
   private
 
   def validate_muted
-    self.errors.add :base, "You have #{ conversation } minutes before another conversation can be started!" if conversation.muted?
+    self.errors.add :base, "You have #{ (Time.now - conversation.mute.created_at)/60 } minutes before another conversation can be started!" if conversation.muted?
   end
 
   def validate_finished

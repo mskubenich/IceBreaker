@@ -9,12 +9,12 @@ class Api::V1::ConversationsController < Api::V1Controller
     @page = 1 if @page < 1
     @per_page = 1 if @per_page < 1
 
-    @conversations = current_user.conversations.where(status: 0).order('created_at DESC').limit(@per_page).offset(@page - 1)
+    @conversations = current_user.conversations.order('created_at DESC').limit(@per_page).offset(@page - 1)
     @total = current_user.conversations.count
   end
 
   def show
-    @conversation = Conversation.where(id: params[:id], status: 0).try :first
+    @conversation = Conversation.find params[:id]
   end
 
   def destroy

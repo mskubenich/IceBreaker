@@ -113,6 +113,11 @@
                     templateUrl: 'application/templates/conversations/remove.html',
                     controller: 'ConversationsController'
                 })
+                .state('mute',{
+                    url: '/mute',
+                    templateUrl: 'application/templates/users/mute.html',
+                    controller: 'UsersController'
+                })
     }]);
 
     IceApp.run(['$http', '$rootScope', function($http, $rootScope){

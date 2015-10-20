@@ -22,3 +22,7 @@
 every 5.minutes do
   runner "ResetLocationsWorker.perform_async"
 end
+
+every 5.minutes do
+  runner "RemoveMuteWorker.perform_async"
+end
