@@ -15,7 +15,7 @@ class Api::V1::MessagesController < Api::V1Controller
 
     @conversation = Conversation.between_users initiator: current_user, opponent: @opponent
 
-    @message = @conversation.messages.new text: params[:message], author_id: current_user.id
+    @message = @conversation.messages.new text: params[:message], author_id: current_user.id, opponent_id: @opponent.id
     if @message.save
       render json: {message: 'Message sent.'}
     else

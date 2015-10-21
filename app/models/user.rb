@@ -152,6 +152,14 @@ class User < ActiveRecord::Base
     User.near([self.latitude, self.longitude], User::DISTANCE_IN_RADIUS).where(id: opponent.id).present?
   end
 
+  def sended_messages_count_to(user)
+    Message.where(author_id: self.id, opponent_id: user.id).count
+  end
+
+  def received_messages_count_from(user)
+    Message.where(author_id: user.id, opponent_id: self.id).count
+  end
+
   private
 
   def update_location_timestamp

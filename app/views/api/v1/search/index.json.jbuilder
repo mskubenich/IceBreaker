@@ -6,8 +6,8 @@ json.users_in_radius @users_in_radius do |user|
   json.gender      user.gender
   json.latitude    user.latitude
   json.longitude   user.longitude
-  json.sended_messages_count   user.sended_messages_count
-  json.received_messages_count   user.received_messages_count
+  json.sended_messages_count   current_user.sended_messages_count_to(user)
+  json.received_messages_count   current_user.received_messages_count_from(user)
   json.avatar      user.avatar.exists? ? user.avatar.url(:thumb) : user.services.facebook.try(:first).try(:avatar)
 
   mute = Mute.between current_user, user
@@ -29,4 +29,14 @@ json.users_out_of_radius @users_out_of_radius do |user|
   json.longitude   user.longitude
   json.avatar      user.avatar.exists? ? user.avatar.url(:thumb) : user.services.facebook.try(:first).try(:avatar)
   json.has_opened_conversartion !!Conversation.has_opened_between(current_user, user)
+
+  json.sended_messages_count   current_user.sended_messages_count_to(user)
+  json.received_messages_count   current_user.received_messages_count_from(user)
+
+
+  mute = Mute.between current_user, user
+
+  json.muted !!mute
+  json.muted_to mute ? (mute.created_at) + 5.minutes : ''
+  json.muted_by mute.try(:initiator).try(:id)
 end
