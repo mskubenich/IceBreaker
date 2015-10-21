@@ -10,7 +10,7 @@ class Api::V1::ConversationsController < Api::V1Controller
     @per_page = 1 if @per_page < 1
 
     @conversations = current_user.conversations.where.not(removed_by: current_user.id).order('created_at DESC').limit(@per_page).offset(@page - 1)
-    @total = current_user.conversations.count
+    @total = current_user.conversations.where.not(removed_by: current_user.id).count
   end
 
   def show

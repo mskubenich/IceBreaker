@@ -18,8 +18,7 @@ json.conversations @conversations do |conversation|
     json.user_name opponent.user_name
     json.show_email opponent.show_email
     json.avatar opponent.avatar.exists? ? opponent.avatar.url : opponent.services.facebook.first.try(:avatar)
-    json.id opponent.id
-    json.id opponent.id
+    json.email opponent.email
   end
 
   last_message = conversation.last_message

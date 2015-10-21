@@ -153,12 +153,10 @@ class User < ActiveRecord::Base
   end
 
   def sended_messages_count_to(user)
-    Message.where(author_id: self.id, opponent_id: user.id).count
+
   end
 
-  def received_messages_count_from(user)
-    Message.where(author_id: user.id, opponent_id: self.id).count
-  end
+  received_messages_count   current_user.received_messages_count_from(user)
 
   private
 
