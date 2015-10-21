@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151020121727) do
+ActiveRecord::Schema.define(version: 20151021110525) do
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "initiator_id",   limit: 4
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20151020121727) do
     t.boolean  "viewed",                      default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "opponent_id",     limit: 4
   end
 
   create_table "mutes", force: :cascade do |t|
@@ -58,24 +59,26 @@ ActiveRecord::Schema.define(version: 20151020121727) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "user_name",            limit: 255
-    t.string   "first_name",           limit: 255
-    t.string   "last_name",            limit: 255
-    t.string   "gender",               limit: 255
+    t.string   "user_name",               limit: 255
+    t.string   "first_name",              limit: 255
+    t.string   "last_name",               limit: 255
+    t.string   "gender",                  limit: 255
     t.date     "date_of_birth"
-    t.string   "encrypted_password",   limit: 255
-    t.string   "salt",                 limit: 255
-    t.string   "email",                limit: 255
-    t.string   "avatar_file_name",     limit: 255
-    t.string   "avatar_content_type",  limit: 255
-    t.integer  "avatar_file_size",     limit: 4
+    t.string   "encrypted_password",      limit: 255
+    t.string   "salt",                    limit: 255
+    t.string   "email",                   limit: 255
+    t.string   "avatar_file_name",        limit: 255
+    t.string   "avatar_content_type",     limit: 255
+    t.integer  "avatar_file_size",        limit: 4
     t.datetime "avatar_updated_at"
     t.boolean  "show_email"
-    t.string   "reset_password_token", limit: 255
-    t.float    "latitude",             limit: 24
-    t.float    "longitude",            limit: 24
+    t.string   "reset_password_token",    limit: 255
+    t.float    "latitude",                limit: 24
+    t.float    "longitude",               limit: 24
     t.datetime "location_updated_at"
-    t.string   "address",              limit: 255
+    t.string   "address",                 limit: 255
+    t.integer  "sended_messages_count",   limit: 4,   default: 0
+    t.integer  "received_messages_count", limit: 4,   default: 0
   end
 
 end

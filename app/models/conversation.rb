@@ -1,9 +1,8 @@
 class Conversation < ActiveRecord::Base
   has_many :messages, -> { order('created_at DESC') }
 
-  scope :unfinished,    ->  { where(messages_count: 3) }
   scope :active,        ->  { where(created_at: Time.zone.now - 1.months..Time.zone.now) }
-  scope :out_of_radius, ->  { where(in_radius: false) }
+  scope :out_of_radius, ->  { where(in_radius: [false, nil]) }
   scope :in_radius,     ->  { where(in_radius: true) }
 
   belongs_to :initiator, class_name: User, foreign_key: :initiator_id

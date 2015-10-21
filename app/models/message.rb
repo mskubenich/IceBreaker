@@ -9,6 +9,7 @@ class Message < ActiveRecord::Base
   after_validation :validate_message_type, :validate_radius, :validate_muted, :validate_finished
   after_save :update_conversation
   after_save :update_user
+  after_save :send_push_notification
 
   def opponent
     if self.author.id == conversation.initiator.id
@@ -51,7 +52,11 @@ class Message < ActiveRecord::Base
   end
 
   def update_user
-    author.update_attribute :sended_messages_count, author.sended_messages_count + 1
-    opponent.update_attribute :received_messages_count, opponent.received_messages_count + 1
+    author.update_attribute :sended_messages_count, author.sended_messages_count.to_i + 1
+    opponent.update_attribute :received_messages_count, opponent.received_messages_count.to_i + 1
+  end
+
+  def send_push_notification
+    opponent.send_push_notification message: "#{ author.user_name } : #{ text }"
   end
 end
