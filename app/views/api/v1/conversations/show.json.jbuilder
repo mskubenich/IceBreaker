@@ -27,5 +27,6 @@ json.conversation do
     json.author_id message.author_id
     json.text      message.text
     json.viewed    message.viewed
+    json.created_at message.created_at.strftime("%d/%M/%Y %H:%m")
   end
 end
