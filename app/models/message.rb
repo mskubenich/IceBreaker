@@ -7,7 +7,8 @@ class Message < ActiveRecord::Base
   validates :text, presence: true
 
   after_validation :validate_message_type, :validate_radius, :validate_muted, :validate_finished
-  after_save :update_conversation, :update_user
+  after_save :update_conversation
+  after_save :update_user
 
   def opponent
     if self.author.id == conversation.initiator.id
