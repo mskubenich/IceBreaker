@@ -6,6 +6,8 @@ json.users_in_radius @users_in_radius do |user|
   json.gender      user.gender
   json.latitude    user.latitude
   json.longitude   user.longitude
+  json.sended_messages_count   user.sended_messages_count
+  json.received_messages_count   user.received_messages_count
   json.avatar      user.avatar.exists? ? user.avatar.url(:thumb) : user.services.facebook.try(:first).try(:avatar)
 
   mute = Mute.between current_user, user

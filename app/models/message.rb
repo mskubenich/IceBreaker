@@ -7,7 +7,15 @@ class Message < ActiveRecord::Base
   validates :text, presence: true
 
   after_validation :validate_message_type, :validate_radius, :validate_muted, :validate_finished
-  after_save :update_conversation
+  after_save :update_conversation, :update_user
+
+  def opponent
+    if self.author.id == conversation.initiator.id
+      conversation.opponent
+    else
+      conversation.initiator
+    end
+  end
 
   private
 
@@ -38,5 +46,10 @@ class Message < ActiveRecord::Base
 
   def update_conversation
     conversation.update_attributes messages_count: conversation.messages.count
+  end
+
+  def update_user
+    author.update_attribute :sended_messages_count, author.sended_messages_count + 1
+    opponent.update_attribute :received_messages_count, opponent.received_messages_count + 1
   end
 end
