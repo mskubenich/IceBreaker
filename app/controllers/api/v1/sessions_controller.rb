@@ -40,6 +40,8 @@ class Api::V1::SessionsController < Api::V1Controller
         if @user
           @user.assign_attributes user_params
         else
+          @user = User.new user_params
+          @user.services = [@service]
           @service.user = @user
         end
       end

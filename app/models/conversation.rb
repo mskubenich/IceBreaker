@@ -26,10 +26,22 @@ class Conversation < ActiveRecord::Base
     messages.order('created_at ASC').offset(2).limit(1).try :first
   end
 
-  def self.between_users initiator:, opponent:
+  def self.between_users(initiator:, opponent:)
     conversation = where(initiator_id: [initiator.id, opponent.id], opponent_id: [opponent.id, initiator.id]).order('created_at ASC').last
     conversation = Conversation.create initiator_id: initiator.id, opponent_id: opponent.id if !conversation || conversation.muted_done?
     conversation
+  end
+
+  def self.has_opened_between(initiator, opponent)
+    conversations = Conversation.arel_table
+
+    query = conversations
+        .project(conversations[:initiator_id], conversations[:opponent_id], conversations[:messages_count])
+        .where(conversations[:initiator_id].in([initiator.id, opponent.id]).and(conversations[:opponent_id].in([opponent.id, initiator.id]).and(conversations[:messages_count].lt(3))))
+        .take(1)
+
+    conversation = Conversation.find_by_sql(query)
+    conversation.any?
   end
 
   def muted?
