@@ -5,6 +5,7 @@ json.conversations @conversations do |conversation|
   json.finished conversation.done?
   json.status conversation.status
   json.removed_by conversation.removed_by if conversation.removed?
+  json.removed_by_user_name conversation.removed_by_user.user_name if conversation.removed?
   json.muted conversation.muted?
   json.muted_to conversation.muted? ? (conversation.mute.created_at) + 5.minutes : ''
   json.muted_by conversation.muted_by.try(:id)

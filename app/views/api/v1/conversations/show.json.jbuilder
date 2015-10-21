@@ -6,6 +6,7 @@ json.conversation do
   json.status @conversation.status
   if @conversation.removed?
     json.removed_by @conversation.removed_by
+    json.removed_by_user_name @conversation.removed_by_user.user_name
   end
   json.muted @conversation.muted?
   json.muted_to @conversation.muted? ? (@conversation.mute.created_at) + 5.minutes : ''
