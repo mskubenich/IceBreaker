@@ -10,7 +10,7 @@ class Conversation < ActiveRecord::Base
   belongs_to :opponent, class_name: User, foreign_key: :opponent_id
   belongs_to :removed_by_user, class_name: User, foreign_key: :removed_by
 
-  enum status: { active: 0, removed: 1 }
+  enum status: { active: 0, removed: 1, finished: 2 }
 
   MUTED_TIME = 5.hours
 

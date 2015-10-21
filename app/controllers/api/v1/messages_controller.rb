@@ -19,7 +19,7 @@ class Api::V1::MessagesController < Api::V1Controller
     if @message.save
       render json: {message: 'Message sent.'}
     else
-      render json: {errors: @message.errors}, status: :unprocessable_entity
+      render json: {errors: @message.errors.full_messages}, status: :unprocessable_entity
     end
   end
 end
