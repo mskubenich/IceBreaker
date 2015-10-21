@@ -5,9 +5,9 @@ json.conversations @conversations do |conversation|
   json.finished conversation.done?
   json.status conversation.status
   json.removed_by conversation.removed_by if conversation.removed?
-  json.removed_by_user_name conversation.removed_by_user.user_name if conversation.removed?
+  json.removed_by_user_name conversation.removed_by_user.try :user_name if conversation.removed?
   json.muted conversation.muted?
-  json.muted_to conversation.muted? ? (conversation.mute.created_at) + 5.minutes : ''
+  json.muted_to conversation.muted? ? (conversation.mute.created_at + 5.minutes) - Time.now.utc : ''
   json.muted_by conversation.muted_by.try(:id)
 
   opponent = conversation.opponent_to current_user
@@ -27,7 +27,7 @@ json.conversations @conversations do |conversation|
     json.author_id last_message.author_id
     json.text last_message.text
     json.viewed last_message.viewed
-    json.created_at last_message.created_at.strftime("%d/%M/%Y %H:%m")
+    json.created_at last_message.created_at.strftime("%d/%m/%Y %H:%M")
   end if last_message
 end
 json.page @page

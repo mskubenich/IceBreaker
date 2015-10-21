@@ -5,7 +5,7 @@ class RemoveMuteWorker
 
   def perform
     Mute.find_each do |mute|
-      if mute.updated_at > (Time.now - 5.minutes)
+      if mute.updated_at > (Time.now.utc - 5.minutes)
         mute.destroy
       end
     end

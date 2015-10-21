@@ -1,5 +1,5 @@
 class Conversation < ActiveRecord::Base
-  has_many :messages, -> { order('created_at DESC') }
+  has_many :messages, -> { order('created_at ASC') }, dependent: :destroy
 
   scope :active,        ->  { where(created_at: Time.zone.now - 1.months..Time.zone.now) }
   scope :out_of_radius, ->  { where(in_radius: [false, nil]) }
@@ -11,23 +11,29 @@ class Conversation < ActiveRecord::Base
 
   enum status: { active: 0, removed: 1, finished: 2 }
 
+  validates :initiator_id, presence: true
+  validates :opponent_id, presence: true
+  before_validation :validate_ids
+
   MUTED_TIME = 5.hours
 
   def initial_message
-    messages.order('created_at ASC').offset(0).limit(1).try :first
+    messages.order('created_at DESC').offset(0).limit(1).try :first
   end
 
   def reply_message
-    messages.order('created_at ASC').offset(1).limit(1).try :first
+    messages.order('created_at DESC').offset(1).limit(1).try :first
   end
 
   def finished_message
-    messages.order('created_at ASC').offset(2).limit(1).try :first
+    messages.order('created_at DESC').offset(2).limit(1).try :first
   end
 
   def self.between_users(initiator:, opponent:)
     conversation = where(initiator_id: [initiator.id, opponent.id], opponent_id: [opponent.id, initiator.id]).order('created_at ASC').last
-    conversation = Conversation.create initiator_id: initiator.id, opponent_id: opponent.id if !conversation || conversation.muted_done?
+    if !conversation || conversation.finished?
+      conversation = Conversation.create initiator_id: initiator.id, opponent_id: opponent.id
+    end
     conversation
   end
 
@@ -55,10 +61,6 @@ class Conversation < ActiveRecord::Base
     Mute.between initiator, opponent
   end
 
-  def muted_done?
-    done? && ( Time.now - finished_message.created_at > MUTED_TIME )
-  end
-
   def done?
     messages.count == 3
   end
@@ -75,5 +77,11 @@ class Conversation < ActiveRecord::Base
     else
       nil
     end
+  end
+
+  private
+
+  def validate_ids
+    self.errors.add :base, 'You can not write to yourself.' if initiator.id == opponent.id
   end
 end

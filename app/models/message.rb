@@ -6,7 +6,10 @@ class Message < ActiveRecord::Base
   validates :conversation_id, presence: true
   validates :text, presence: true
 
-  after_validation :validate_message_type, :validate_radius, :validate_muted, :validate_finished
+  after_validation :validate_message_type
+  after_validation :validate_radius
+  after_validation :validate_muted
+  after_validation :validate_finished
   after_save :update_conversation
   after_save :update_user
   after_save :send_push_notification
@@ -38,9 +41,9 @@ class Message < ActiveRecord::Base
       when 0 # initial
 
       when 1
-        self.errors.add :author_id, 'You can not send messages to this conversation. There is not your turn.' if author.id == conversation.initial_message.author
+        self.errors.add :author_id, 'You can not send messages to this conversation. There is not your turn.' if author.id == conversation.initial_message.author.id
       when 2
-        self.errors.add :author_id, 'You can not send messages to this conversation. There is not your turn.' if author.id == conversation.reply_message.author
+        self.errors.add :author_id, 'You can not send messages to this conversation. There is not your turn.' if author.id == conversation.reply_message.author.id
       else
         self.errors.add :base, 'Conversation closed.'
     end

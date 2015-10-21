@@ -7,7 +7,7 @@ class Mute < ActiveRecord::Base
 
   def self.between(user1, user2)
     mute = where(initiator_id: [user1.id, user2.id], opponent_id: [user2.id, user1.id]).try :first
-    if mute && mute.created_at > Time.now - 5.minutes
+    if mute && ((mute.created_at + 5.minutes) - Time.now.utc < 0)
       mute.destroy
       return nil
     end

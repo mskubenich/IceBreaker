@@ -5,7 +5,7 @@ class ResetLocationsWorker
 
   def perform
     User.find_each do |user|
-      if user.location_updated_at && user.location_updated_at > (Time.now - 5.minutes)
+      if user.location_updated_at && user.location_updated_at > (Time.now.utc - 5.minutes)
         user.reset_location
       end
     end

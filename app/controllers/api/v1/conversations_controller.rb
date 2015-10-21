@@ -9,8 +9,13 @@ class Api::V1::ConversationsController < Api::V1Controller
     @page = 1 if @page < 1
     @per_page = 1 if @per_page < 1
 
-    @conversations = current_user.conversations.order('created_at DESC').limit(@per_page).offset(@page - 1)
-    @total = current_user.conversations.count
+    conversations = Conversation.arel_table
+
+    query = conversations.project(Arel.star).where(conversations[:removed_by].not_eq(current_user.id).and(conversations[:initiator_id].eq(current_user.id).or(conversations[:opponent_id].eq(current_user.id)))).order('created_at DESC').take(@per_page).skip(@page - 1)
+
+    @conversations = Conversation.find_by_sql(query)
+    query_count = query.clone
+    @total = Conversation.find_by_sql(query_count).count
   end
 
   def show

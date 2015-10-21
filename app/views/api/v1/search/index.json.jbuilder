@@ -13,7 +13,7 @@ json.users_in_radius @users_in_radius do |user|
   mute = Mute.between current_user, user
 
   json.muted !!mute
-  json.muted_to mute ? (mute.created_at) + 5.minutes : ''
+  json.muted_to mute ? (mute.created_at + 5.minutes) - Time.now.utc : ''
   json.muted_by mute.try(:initiator).try(:id)
 
   json.has_opened_conversartion !!Conversation.has_opened_between(current_user, user)
@@ -37,6 +37,6 @@ json.users_out_of_radius @users_out_of_radius do |user|
   mute = Mute.between current_user, user
 
   json.muted !!mute
-  json.muted_to mute ? (mute.created_at) + 5.minutes : ''
+  json.muted_to mute ? (mute.created_at + 5.minutes) - Time.now.utc : ''
   json.muted_by mute.try(:initiator).try(:id)
 end

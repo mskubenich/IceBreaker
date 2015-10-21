@@ -6,11 +6,13 @@ json.conversation do
   json.status @conversation.status
   if @conversation.removed?
     json.removed_by @conversation.removed_by
-    json.removed_by_user_name @conversation.removed_by_user.user_name
+    json.removed_by_user_name @conversation.removed_by_user.try :user_name
   end
   json.muted @conversation.muted?
-  json.muted_to @conversation.muted? ? (@conversation.mute.created_at) + 5.minutes : ''
+  json.muted_to @conversation.muted? ? (@conversation.mute.created_at + 5.minutes) - Time.now.utc : ''
   json.muted_by @conversation.muted_by.try(:id)
+
+  json.your_turn @conversation.messages.count == 0 || @conversation.last_message.author.id != current_user.id
 
   opponent = @conversation.opponent_to current_user
   json.opponent do
@@ -28,6 +30,6 @@ json.conversation do
     json.author_id message.author_id
     json.text      message.text
     json.viewed    message.viewed
-    json.created_at message.created_at.strftime("%d/%M/%Y %H:%m")
+    json.created_at message.created_at.strftime("%d/%m/%Y %H:%M")
   end
 end

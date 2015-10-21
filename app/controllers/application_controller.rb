@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user
     if current_user
-      if Time.now - current_session.updated_at > 24.hours
+      if Time.now.utc - current_session.updated_at > 24.hours
         current_session.destroy
         respond_with_errors
       else
@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def catch_exceptions(e)
+    raise
     case e.class
       when CanCan::AccessDenied
         respond_with_errors

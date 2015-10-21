@@ -14,6 +14,7 @@ class Api::V1::MessagesController < Api::V1Controller
     render json: {errors: ['Can\'t find opponent by id.']}, status: :unprocessable_entity and return unless @opponent
 
     @conversation = Conversation.between_users initiator: current_user, opponent: @opponent
+    render json: {errors: @conversation.errors.full_messages }, status: :unprocessable_entity and return if @conversation.errors.any?
 
     @message = @conversation.messages.new text: params[:message], author_id: current_user.id, opponent_id: @opponent.id
     if @message.save
