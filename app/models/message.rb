@@ -10,6 +10,7 @@ class Message < ActiveRecord::Base
   after_validation :validate_radius
   after_validation :validate_muted
   after_validation :validate_finished
+  after_validation :validate_mute_between_conversations
   after_save :update_conversation
   after_save :update_user
   after_save :send_push_notification
