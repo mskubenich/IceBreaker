@@ -28,7 +28,7 @@ class Api::V1::UsersController < Api::V1Controller
     @mute = Mute.new initiator_id: current_user.id, opponent_id: @user.id, mute_type: :ban
 
     if @mute.save
-      Conversation.all_between(current_user, @user).ech do |c|
+      Conversation.all_between(current_user, @user).each do |c|
         c.update_attribute :status, :ignored
       end
       render json: { ok: true }
