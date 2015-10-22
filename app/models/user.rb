@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :first_name, :last_name, :user_name
 
-  validates :password, presence: true, confirmation: true, length: { in: 8..20 }, if: lambda { services.blank? ? (new_record? || password) : false }
+  validates :password, presence: true, confirmation: true, length: { in: 8..20 }, if: lambda { new_record? || password }
 
   validates :gender, inclusion: { in: ['male', 'female'], message: 'can be only male/female'}, presence: true
 
@@ -160,6 +160,10 @@ class User < ActiveRecord::Base
 
   def received_messages_count_from(user)
     Message.where(author_id: user.id, opponent_id: self.id).count
+  end
+
+  def set_random_password
+    self.password = self.password_confirmation = generate_random_string
   end
 
   private

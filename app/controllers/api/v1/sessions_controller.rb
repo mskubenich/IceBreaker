@@ -41,6 +41,7 @@ class Api::V1::SessionsController < Api::V1Controller
           @user.assign_attributes user_params
         else
           @user = User.new user_params
+          @user.set_random_password
           @user.services = [@service]
           @service.user = @user
         end

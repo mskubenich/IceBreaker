@@ -30,7 +30,7 @@ class Conversation < ActiveRecord::Base
   end
 
   def self.all_between(user1, user2)
-    where(initiator_id: [initiator.id, opponent.id], opponent_id: [opponent.id, initiator.id])
+    where(initiator_id: [user1.id, user2.id], opponent_id: [user2.id, user1.id])
   end
 
   def self.between_users(initiator:, opponent:)
