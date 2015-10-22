@@ -66,7 +66,7 @@ class Conversation < ActiveRecord::Base
   end
 
   def last_message
-    messages.order('created_at DESC').try :first
+    messages.order('created_at ASC').try :first
   end
 
   def opponent_to(user)
