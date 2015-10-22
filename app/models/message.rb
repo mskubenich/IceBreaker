@@ -9,7 +9,8 @@ class Message < ActiveRecord::Base
   after_validation :validate_message_type
   after_validation :validate_radius
   after_validation :validate_muted
-  after_validation :validate_finished
+  after_validation :validate_conversation_finished
+  after_validation :validate_conversation_removed
   after_validation :validate_mute_between_conversations
   after_save :update_conversation
   after_save :update_user
@@ -34,8 +35,12 @@ class Message < ActiveRecord::Base
     self.errors.add :base, "You have #{ ((Time.now - conversation.mute.created_at)/60).round } seconds before another conversation can be started!" if mute
   end
 
-  def validate_finished
-    self.errors.add :base, "Conversation done." if conversation.done?
+  def validate_conversation_finished
+    self.errors.add :base, "Conversation done." if conversation.finished?
+  end
+
+  def validate_conversation_removed
+    self.errors.add :base, "Conversation removed." if conversation.removed?
   end
 
   def validate_radius

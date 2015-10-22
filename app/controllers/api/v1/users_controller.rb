@@ -25,7 +25,7 @@ class Api::V1::UsersController < Api::V1Controller
   def mute
     @user = User.find params[:opponent_id]
 
-    @mute = Mute.new initiator_id: current_user.id, opponent_id: @user.id
+    @mute = Mute.new initiator_id: current_user.id, opponent_id: @user.id, mute_type: :ban
 
     if @mute.save
       render json: { ok: true }
