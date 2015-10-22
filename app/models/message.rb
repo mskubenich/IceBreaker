@@ -25,7 +25,12 @@ class Message < ActiveRecord::Base
   private
 
   def validate_muted
-    self.errors.add :base, "You have #{ ((Time.now - conversation.mute.created_at)/60).round } minutes before another conversation can be started!" if conversation.muted?
+    self.errors.add :base, "Conversation muted by #{ conversation.mute.initiator.try :user_name }.You have #{ ((Time.now - conversation.mute.created_at)/60).round } seconds before another conversation can be started!" if conversation.muted?
+  end
+
+  def validate_mute_between_conversations
+    mute = Mute.between author, opponent, type: :conversation_removed
+    self.errors.add :base, "You have #{ ((Time.now - conversation.mute.created_at)/60).round } seconds before another conversation can be started!" if mute
   end
 
   def validate_finished

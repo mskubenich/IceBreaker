@@ -61,7 +61,7 @@ class Conversation < ActiveRecord::Base
   end
 
   def mute
-    Mute.between initiator, opponent
+    Mute.between initiator, opponent, type: :ban
   end
 
   def done?

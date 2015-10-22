@@ -7,8 +7,8 @@ class Mute < ActiveRecord::Base
 
   enum mute_type: { ban: 0, conversation_removed: 1 }
 
-  def self.between(user1, user2)
-    mute = where(initiator_id: [user1.id, user2.id], opponent_id: [user2.id, user1.id]).try :first
+  def self.between(user1, user2, options = {})
+    mute = where(initiator_id: [user1.id, user2.id], opponent_id: [user2.id, user1.id], mute_type: options[:type]).try :first
     if mute && ((mute.created_at + 5.minutes) - Time.now.utc < 0)
       mute.destroy
       return nil

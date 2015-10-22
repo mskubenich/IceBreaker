@@ -23,7 +23,7 @@ class Api::V1::ConversationsController < Api::V1Controller
   end
 
   def destroy
-    @mute = Mute.new initiator_id: current_user.id, opponent_id: @conversation.opponent_to(current_user), mute_status: :conversation_removed
+    @mute = Mute.new initiator_id: current_user.id, opponent_id: @conversation.opponent_to(current_user), mute_type: :conversation_removed
 
     if @mute.save
       if @conversation.removed_by_user.id == @conversation.opponent_to(current_user).try(:id)
