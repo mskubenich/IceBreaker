@@ -127,7 +127,6 @@ class User < ActiveRecord::Base
           )
           $ios_pusher.push(notification)
         elsif session.device.downcase == 'android'
-          require 'rest_client'
           url = 'https://android.googleapis.com/gcm/send'
           headers = {
               'Authorization' => 'key=AIzaSyBCK9NX8gRY51g9UwtY1znEirJuZqTNmAU',
@@ -142,9 +141,7 @@ class User < ActiveRecord::Base
               }
           }
 
-          response = RestClient.post(url, request.to_json, headers)
-          result = true
-          info = 'Pushed to Android'
+          RestClient.post(url, request.to_json, headers)
         end
       end
     end
