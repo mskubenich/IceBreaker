@@ -23,7 +23,17 @@ class Api::V1::ConversationsController < Api::V1Controller
   end
 
   def destroy
-    @conversation.update_attributes status: :removed, removed_by: current_user.id
-    render nothing: true
+    @mute = Mute.new initiator_id: current_user.id, opponent_id: @conversation.opponent_to(current_user), mute_status: :conversation_removed
+
+    if @mute.save
+      if @conversation.removed_by_user.id == @conversation.opponent_to(current_user).try(:id)
+        @conversation.destroy
+      else
+        @conversation.update_attributes status: :removed, removed_by: current_user.id
+      end
+      render json: { ok: true }
+    else
+      render json: {errors: @mute.errors.full_messages}, status: :unprocessable_entity
+    end
   end
 end

@@ -119,7 +119,7 @@ class User < ActiveRecord::Base
 
         if session.device.downcase == 'ios'
           notification = Grocer::Notification.new(
-              device_token: '9fd0476735500584aa3213eea4ddeaa76aa3338413fcf5d217d4099816d4335a', #session.device_token
+              device_token: session.device_token,
               alert:        message,
               sound:        "default",
               badge:        unread_messages_count,

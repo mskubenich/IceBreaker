@@ -42,7 +42,10 @@ class Conversation < ActiveRecord::Base
 
     query = conversations
         .project(conversations[:initiator_id], conversations[:opponent_id], conversations[:messages_count])
-        .where(conversations[:initiator_id].in([initiator.id, opponent.id]).and(conversations[:opponent_id].in([opponent.id, initiator.id]).and(conversations[:messages_count].lt(3))))
+        .where(
+            conversations[:initiator_id].in([initiator.id, opponent.id])
+                .and(conversations[:opponent_id].in([opponent.id, initiator.id])
+                         .and(conversations[:status].eq(0))))
         .take(1)
 
     conversation = Conversation.find_by_sql(query)
