@@ -9,7 +9,7 @@ class Conversation < ActiveRecord::Base
   belongs_to :opponent, class_name: User, foreign_key: :opponent_id
   belongs_to :removed_by_user, class_name: User, foreign_key: :removed_by
 
-  enum status: { active: 0, removed: 1, finished: 2 }
+  enum status: { active: 0, removed: 1, finished: 2, ignored: 3 }
 
   validates :initiator_id, presence: true
   validates :opponent_id, presence: true
@@ -27,6 +27,10 @@ class Conversation < ActiveRecord::Base
 
   def finished_message
     messages.order('created_at DESC').offset(2).limit(1).try :first
+  end
+
+  def self.all_between(user1, user2)
+    where(initiator_id: [initiator.id, opponent.id], opponent_id: [opponent.id, initiator.id])
   end
 
   def self.between_users(initiator:, opponent:)

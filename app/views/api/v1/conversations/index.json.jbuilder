@@ -2,7 +2,7 @@ json.conversations @conversations do |conversation|
   json.id conversation.id
   json.created_at conversation.created_at
   json.updated_at conversation.updated_at
-  json.finished conversation.done?
+  json.finished !conversation.active?
   json.status conversation.status
   json.removed_by conversation.removed_by if conversation.removed?
   json.removed_by_user_name conversation.removed_by_user.try :user_name if conversation.removed?
