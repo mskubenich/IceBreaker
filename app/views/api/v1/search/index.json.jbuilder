@@ -11,12 +11,18 @@ json.users_in_radius @users_in_radius do |user|
   json.avatar      user.avatar.exists? ? user.avatar.url(:thumb) : user.services.facebook.try(:first).try(:avatar)
 
   mute = Mute.between current_user, user, type: Mute.mute_types[:ban]
-
   json.muted !!mute
   json.muted_to mute ? (mute.created_at + 5.minutes) - Time.now.utc : ''
   json.muted_by mute.try(:initiator).try(:id)
 
-  json.has_opened_conversartion !!Conversation.has_opened_between(current_user, user)
+  has_opened_conversation = Conversation.has_opened_between(current_user, user)
+  opened_conversation = Conversation.opened_between(current_user, user)
+  json.has_opened_conversartion has_opened_conversation
+
+  conversation_removed_mute = Mute.between current_user, user, type: Mute.mute_types[:conversation_removed]
+  json.removed_by opened_conversation.try :removed_by if opened_conversation
+  json.removed_by_user_name opened_conversation.try(:removed_by_user).try(:user_name) if opened_conversation
+  json.removed_to conversation_removed_mute ? (conversation_removed_mute.created_at + 5.minutes) - Time.now.utc : ''
 end
 
 json.users_out_of_radius @users_out_of_radius do |user|
@@ -39,4 +45,13 @@ json.users_out_of_radius @users_out_of_radius do |user|
   json.muted !!mute
   json.muted_to mute ? (mute.created_at + 5.minutes) - Time.now.utc : ''
   json.muted_by mute.try(:initiator).try(:id)
+
+  has_opened_conversation = Conversation.has_opened_between(current_user, user)
+  opened_conversation = Conversation.opened_between(current_user, user)
+  json.has_opened_conversartion has_opened_conversation
+
+  conversation_removed_mute = Mute.between current_user, user, type: Mute.mute_types[:conversation_removed]
+  json.removed_by opened_conversation.try :removed_by if opened_conversation
+  json.removed_by_user_name opened_conversation.try(:removed_by_user).try(:user_name) if opened_conversation
+  json.removed_to conversation_removed_mute ? (conversation_removed_mute.created_at + 5.minutes) - Time.now.utc : ''
 end

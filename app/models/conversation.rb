@@ -42,18 +42,22 @@ class Conversation < ActiveRecord::Base
   end
 
   def self.has_opened_between(initiator, opponent)
+    !!opened_between(initiator, opponent)
+  end
+
+  def self.opened_between(initiator, opponent)
     conversations = Conversation.arel_table
 
     query = conversations
-        .project(conversations[:initiator_id], conversations[:opponent_id], conversations[:messages_count])
-        .where(
-            conversations[:initiator_id].in([initiator.id, opponent.id])
-                .and(conversations[:opponent_id].in([opponent.id, initiator.id])
-                         .and(conversations[:status].eq(0))))
-        .take(1)
+                .project(conversations[:initiator_id], conversations[:opponent_id], conversations[:messages_count])
+                .where(
+                    conversations[:initiator_id].in([initiator.id, opponent.id])
+                        .and(conversations[:opponent_id].in([opponent.id, initiator.id])
+                                 .and(conversations[:status].eq(0))))
+                .take(1)
+                .order('created_at DESC')
 
-    conversation = Conversation.find_by_sql(query)
-    conversation.any?
+    Conversation.find_by_sql(query).try :first
   end
 
   def muted?
