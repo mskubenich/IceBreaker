@@ -1,6 +1,7 @@
 class Mute < ActiveRecord::Base
   belongs_to :initiator, class_name: User, foreign_key: :initiator_id
   belongs_to :opponent, class_name: User, foreign_key: :opponent_id
+  belongs_to :conversation
 
   before_validation :validate_users
   after_save :send_push_notification

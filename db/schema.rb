@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021182348) do
+ActiveRecord::Schema.define(version: 20151023135544) do
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "initiator_id",   limit: 4
@@ -36,10 +36,12 @@ ActiveRecord::Schema.define(version: 20151021182348) do
   end
 
   create_table "mutes", force: :cascade do |t|
-    t.integer  "initiator_id", limit: 4
-    t.integer  "opponent_id",  limit: 4
+    t.integer  "initiator_id",    limit: 4
+    t.integer  "opponent_id",     limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "mute_type",       limit: 4, default: 0
+    t.integer  "conversation_id", limit: 4
   end
 
   create_table "services", force: :cascade do |t|
