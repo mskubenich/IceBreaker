@@ -14,6 +14,7 @@ class Api::V1::SessionsController < Api::V1Controller
   end
 
   def destroy
+    current_user.reset_location
     current_session.destroy
     render nothing: true
   end
