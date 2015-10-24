@@ -29,7 +29,7 @@ json.conversation do
     json.author    message.author_id == current_user.id ? 'I' : 'He'
     json.author_id message.author_id
     json.text      message.text
-    json.viewed    message.viewed
+    json.viewed     message.author_id == current_user.id ? true : message.viewed
     json.created_at message.created_at.strftime("%d/%m/%Y %H:%M")
   end
 end
