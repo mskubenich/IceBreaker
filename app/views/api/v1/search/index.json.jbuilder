@@ -34,7 +34,6 @@ json.users_out_of_radius @users_out_of_radius do |user|
   json.latitude    user.latitude
   json.longitude   user.longitude
   json.avatar      user.avatar.exists? ? user.avatar.url(:thumb) : user.services.facebook.try(:first).try(:avatar)
-  json.has_opened_conversartion !!Conversation.has_opened_between(current_user, user)
 
   json.sended_messages_count   current_user.sended_messages_count_to(user)
   json.received_messages_count   current_user.received_messages_count_from(user)

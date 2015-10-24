@@ -35,7 +35,7 @@ class Conversation < ActiveRecord::Base
 
   def self.between_users(initiator:, opponent:)
     conversation = where(initiator_id: [initiator.id, opponent.id], opponent_id: [opponent.id, initiator.id]).order('created_at ASC').last
-    if !conversation || conversation.finished?
+    if !conversation || !conversation.active?
       conversation = Conversation.create initiator_id: initiator.id, opponent_id: opponent.id
     end
     conversation
