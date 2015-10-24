@@ -20,6 +20,9 @@ class Api::V1::ConversationsController < Api::V1Controller
 
   def show
     @conversation = Conversation.find params[:id]
+    @conversation.messages.each do |m|
+      m.update_attribute :viewed, true unless m.viewed
+    end
   end
 
   def destroy

@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 20151023135544) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "message_type",    limit: 4
     t.string   "text",            limit: 255
     t.integer  "conversation_id", limit: 4
     t.integer  "author_id",       limit: 4
@@ -79,6 +78,8 @@ ActiveRecord::Schema.define(version: 20151023135544) do
     t.float    "longitude",               limit: 24
     t.datetime "location_updated_at"
     t.string   "address",                 limit: 255
+    t.datetime "set_location_at"
+    t.datetime "location_updated__at"
     t.integer  "sended_messages_count",   limit: 4,   default: 0
     t.integer  "received_messages_count", limit: 4,   default: 0
   end
