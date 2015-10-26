@@ -29,7 +29,9 @@ class Api::V1::UsersController < Api::V1Controller
 
     if @mute.save
       Conversation.all_between(current_user, @user).each do |c|
+        next unless c.active?
         c.update_attribute :status, :ignored
+        c.messages.each { |m| m.update_attribute :viewed, true }
       end
       render json: { ok: true }
     else
@@ -37,7 +39,7 @@ class Api::V1::UsersController < Api::V1Controller
     end
   end
 
-  private 
+  private
 
   def user_params
     params.permit :first_name,

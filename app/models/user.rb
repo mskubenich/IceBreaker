@@ -39,11 +39,11 @@ class User < ActiveRecord::Base
   end
 
   def unread_messages
-    Message.find_by_sql unread_messages_query
+    Message.where(opponent_id: self.id, viewed: false)
   end
 
   def unread_messages_count
-    Message.find_by_sql(unread_messages_query).count
+    unread_messages.count
   end
 
   def authenticate(password)
@@ -100,7 +100,14 @@ class User < ActiveRecord::Base
                             .where(['initiator_id IN(:self) AND opponent_id IN(:ids) OR initiator_id IN(:ids) AND opponent_id IN(:self)', self: self.id,  ids: out_radius_and_in_conversation_users_ids])
                             .distinct
 
-    new_out_of_radius.update_all(in_radius: false)
+    new_out_of_radius.each do |conversation|
+      conversation.update_attribute(:in_radius, false)
+      user = User.find_by(id: [conversation.initiator_id, conversation.opponent_id] - [self.id])
+
+      self.send_push_notification message: "#{user.user_name} is out of radius", back_in_radius: false
+      user.send_push_notification message: "#{self.user_name} is out of radius", back_in_radius: false
+    end
+
 
     new_in_radius.each do |conversation|
       conversation.update_attribute(:in_radius, true)
@@ -165,26 +172,12 @@ class User < ActiveRecord::Base
 
   private
 
-  def unread_messages_query
-    messages = Message.arel_table
-    users = User.arel_table
-    conversations = Conversation.arel_table
-
-    query = messages
-                .project(Arel.star)
-                .join(users)
-                .join(conversations)
-                .where(conversations[:initiator_id].eq(self.id)
-                           .or(conversations[:opponent_id].eq(self.id))
-                           .and(messages[:viewed].eq(false))).group(messages[:id])
-  end
-
   def update_location_timestamp
     self.location_updated_at = Time.now if self.latitude_changed? || self.longitude_changed?
   end
 
   def generate_random_string
-    (0...23).map { (('a'..'z').to_a + ('A'..'Z').to_a).to_a[rand(52)] }.join
+    (0...19).map { (('a'..'z').to_a + ('A'..'Z').to_a).to_a[rand(52)] }.join
   end
 
   def encrypt_password

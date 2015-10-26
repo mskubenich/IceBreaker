@@ -6,7 +6,7 @@ class Mute < ActiveRecord::Base
   before_validation :validate_users
   after_save :send_push_notification
 
-  enum mute_type: { ban: 0, conversation_removed: 1 }
+  enum mute_type: { ban: 0, conversation_removed: 1, finished: 2 }
 
   def self.between(user1, user2, options = {})
     mute = where(initiator_id: [user1.id, user2.id], opponent_id: [user2.id, user1.id], mute_type: options[:type]).try :first

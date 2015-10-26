@@ -76,10 +76,8 @@ ActiveRecord::Schema.define(version: 20151023135544) do
     t.string   "reset_password_token",    limit: 255
     t.float    "latitude",                limit: 24
     t.float    "longitude",               limit: 24
-    t.datetime "location_updated_at"
     t.string   "address",                 limit: 255
-    t.datetime "set_location_at"
-    t.datetime "location_updated__at"
+    t.datetime "location_updated_at"
     t.integer  "sended_messages_count",   limit: 4,   default: 0
     t.integer  "received_messages_count", limit: 4,   default: 0
   end

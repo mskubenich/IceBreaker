@@ -36,6 +36,7 @@ class Api::V1::ConversationsController < Api::V1Controller
         @conversation.destroy
       else
         @conversation.update_attributes status: :removed, removed_by: current_user.id
+        @conversation.messages.each { |m| m.update_attribute :viewed, true }
       end
       render json: { ok: true }
     else

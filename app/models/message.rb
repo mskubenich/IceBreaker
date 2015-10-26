@@ -12,9 +12,10 @@ class Message < ActiveRecord::Base
   after_validation :validate_conversation_finished
   after_validation :validate_conversation_removed
   after_validation :validate_mute_between_conversations
-  after_save :update_conversation
   after_save :update_user
-  after_save :send_push_notification
+  after_create :send_push_notification
+  after_save :update_messages
+  after_save :update_conversation
 
   def opponent
     if self.author.id == conversation.initiator.id
@@ -33,6 +34,8 @@ class Message < ActiveRecord::Base
   def validate_mute_between_conversations
     mute = Mute.between author, opponent, type: Mute.mute_types[:conversation_removed]
     self.errors.add :base, "Conversation removed by #{ mute.initiator.try :user_name }.You have #{ ((Time.now - mute.created_at)/60).round } minutes before another conversation can be started!" if mute
+    mute = Mute.between author, opponent, type: Mute.mute_types[:finished]
+    self.errors.add :base, "Previous conversations is finished.You have #{ ((Time.now - mute.created_at)/60).round } minutes before another conversation can be started!" if mute
   end
 
   def validate_conversation_finished
@@ -62,7 +65,10 @@ class Message < ActiveRecord::Base
 
   def update_conversation
     conversation.update_attributes messages_count: conversation.messages.count
-    conversation.update_attributes status: :finished if conversation.messages.count == 3
+    if conversation.messages.count == 3
+      conversation.update_attributes status: :finished
+      mute = Mute.create initiator_id: conversation.initiator.id, opponent_id: conversation.opponent.id, mute_type: :finished
+    end
   end
 
   def update_user
@@ -72,5 +78,9 @@ class Message < ActiveRecord::Base
 
   def send_push_notification
     opponent.send_push_notification message: "#{ author.user_name } : #{ text }"
+  end
+
+  def update_messages
+    conversation.messages.where(opponent_id: self.author_id, viewed: false).each { |m| m.update_attribute :viewed, true }
   end
 end
