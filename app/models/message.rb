@@ -8,7 +8,6 @@ class Message < ActiveRecord::Base
 
   after_validation :validate_message_type
   after_validation :validate_radius
-  after_validation :validate_muted
   after_validation :validate_conversation_finished
   after_validation :validate_conversation_removed
   after_validation :validate_mute_between_conversations
@@ -27,15 +26,13 @@ class Message < ActiveRecord::Base
 
   private
 
-  def validate_muted
-    self.errors.add :base, "Conversation muted by #{ conversation.mute.initiator.try :user_name }.You have #{ ((Time.now - conversation.mute.created_at)/60).round } minutes before another conversation can be started!" if conversation.muted?
-  end
-
   def validate_mute_between_conversations
     mute = Mute.between author, opponent, type: Mute.mute_types[:conversation_removed]
     self.errors.add :base, "Conversation removed by #{ mute.initiator.try :user_name }.You have #{ ((Time.now - mute.created_at)/60).round } minutes before another conversation can be started!" if mute
     mute = Mute.between author, opponent, type: Mute.mute_types[:finished]
     self.errors.add :base, "Previous conversations is finished.You have #{ ((Time.now - mute.created_at)/60).round } minutes before another conversation can be started!" if mute
+    mute = Mute.between author, opponent, type: Mute.mute_types[:ban]
+    self.errors.add :base, "Conversation muted by #{ mute.initiator.try :user_name }.You have #{ ((Time.now - mute.created_at)/60).round } minutes before another conversation can be started!" if mute
   end
 
   def validate_conversation_finished
