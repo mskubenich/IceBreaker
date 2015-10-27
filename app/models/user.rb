@@ -141,7 +141,7 @@ class User < ActiveRecord::Base
           begin
             url = 'https://android.googleapis.com/gcm/send'
             headers = {
-                'Authorization' => 'key=AIzaSyBCK9NX8gRY51g9UwtY1znEirJuZqTNmAU',
+                'Authorization' => 'key=AIzaSyCjfRxYHdy6G0IuIUFeAR5sR2f5jjytKwI',
                 'Content-Type'  => 'application/json'
             }
             request = {
