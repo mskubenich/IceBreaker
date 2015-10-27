@@ -24,7 +24,7 @@ class Mute < ActiveRecord::Base
   end
 
   def send_push_notification
-    opponent.send_push_notification message: "You have been ignored by #{ initiator.user_name }" if self.mute_type == :ban
-    opponent.send_push_notification message: "User #{ initiator.user_name } removed conversation with you." if self.mute_type == :conversation_removed
+    opponent.send_push_notification message: "You have been ignored by #{ initiator.user_name }" if self.mute_type == "ban"
+    opponent.send_push_notification message: "User #{ initiator.user_name } removed conversation with you." if self.mute_type == "conversation_removed"
   end
 end

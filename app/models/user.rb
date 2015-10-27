@@ -100,14 +100,14 @@ class User < ActiveRecord::Base
                             .where(['initiator_id IN(:self) AND opponent_id IN(:ids) OR initiator_id IN(:ids) AND opponent_id IN(:self)', self: self.id,  ids: out_radius_and_in_conversation_users_ids])
                             .distinct
 
-    new_out_of_radius.each do |conversation|
-      conversation.update_attribute(:in_radius, false)
-      user = User.find_by(id: [conversation.initiator_id, conversation.opponent_id] - [self.id])
-
-      self.send_push_notification message: "#{user.user_name} is out of radius", back_in_radius: false
-      user.send_push_notification message: "#{self.user_name} is out of radius", back_in_radius: false
-    end
-
+    new_out_of_radius.update_all(in_radius: false)
+    # new_out_of_radius.each do |conversation|
+    #   conversation.update_attribute(:in_radius, false)
+    #   user = User.find_by(id: [conversation.initiator_id, conversation.opponent_id] - [self.id])
+    #
+    #   self.send_push_notification message: "#{user.user_name} is out of radius", back_in_radius: false
+    #   user.send_push_notification message: "#{self.user_name} is out of radius", back_in_radius: false
+    # end
 
     new_in_radius.each do |conversation|
       conversation.update_attribute(:in_radius, true)
@@ -125,28 +125,36 @@ class User < ActiveRecord::Base
       if session.device && session.device_token
 
         if session.device.downcase == 'ios'
-          notification = Grocer::Notification.new(
-              device_token: session.device_token,
-              alert:        message,
-              sound:        "default",
-              badge:        unread_messages_count,
-              custom:       { back_in_radius: back_in_radius }
-          )
-          $ios_pusher.push(notification)
+          begin
+            notification = Grocer::Notification.new(
+                device_token: session.device_token,
+                alert:        message,
+                sound:        "default",
+                badge:        unread_messages_count,
+                custom:       { back_in_radius: back_in_radius }
+            )
+            $ios_pusher.push(notification)
+          rescue Exception => e
+
+          end
         elsif session.device.downcase == 'android'
-          url = 'https://android.googleapis.com/gcm/send'
-          headers = {
-              'Authorization' => 'key=AIzaSyBCK9NX8gRY51g9UwtY1znEirJuZqTNmAU',
-              'Content-Type'  => 'application/json'
-          }
-          request = {
-              'registration_ids' => [session.device_token],
-              data: {
-                  'title' => 'IceBr8kr',
-                  'message' => message,
-                  'back_in_radius' => back_in_radius
-              }
-          }
+          begin
+            url = 'https://android.googleapis.com/gcm/send'
+            headers = {
+                'Authorization' => 'key=AIzaSyBCK9NX8gRY51g9UwtY1znEirJuZqTNmAU',
+                'Content-Type'  => 'application/json'
+            }
+            request = {
+                'registration_ids' => [session.device_token],
+                data: {
+                    'title' => 'IceBr8kr',
+                    'message' => message,
+                    'back_in_radius' => back_in_radius
+                }
+            }
+          rescue Exception => e
+
+          end
 
           RestClient.post(url, request.to_json, headers)
         end
