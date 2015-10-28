@@ -101,20 +101,13 @@ class User < ActiveRecord::Base
                             .distinct
 
     new_out_of_radius.update_all(in_radius: false)
-    # new_out_of_radius.each do |conversation|
-    #   conversation.update_attribute(:in_radius, false)
-    #   user = User.find_by(id: [conversation.initiator_id, conversation.opponent_id] - [self.id])
-    #
-    #   self.send_push_notification message: "#{user.user_name} is out of radius", back_in_radius: false
-    #   user.send_push_notification message: "#{self.user_name} is out of radius", back_in_radius: false
-    # end
 
     new_in_radius.each do |conversation|
       conversation.update_attribute(:in_radius, true)
       user = User.find_by(id: [conversation.initiator_id, conversation.opponent_id] - [self.id])
 
-      self.send_push_notification message: "#{user.user_name} is back in radius", back_in_radius: true
-      user.send_push_notification message: "#{self.user_name} is back in radius", back_in_radius: true
+      self.send_push_notification(message: "#{user.user_name} is back in radius", back_in_radius: true) unless conversation.messages_count === 1
+      user.send_push_notification(message: "#{self.user_name} is back in radius", back_in_radius: true) unless conversation.messages_count === 1
     end
   end
 

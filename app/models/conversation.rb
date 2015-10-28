@@ -41,6 +41,14 @@ class Conversation < ActiveRecord::Base
     conversation
   end
 
+  def self.new_between_users(initiator:, opponent:)
+    conversation = where(initiator_id: [initiator.id, opponent.id], opponent_id: [opponent.id, initiator.id]).order('created_at ASC').last
+    if !conversation || !conversation.active?
+      conversation = Conversation.new initiator_id: initiator.id, opponent_id: opponent.id
+    end
+    conversation
+  end
+
   def self.has_opened_between(initiator, opponent)
     !!opened_between(initiator, opponent)
   end
