@@ -145,11 +145,11 @@ class User < ActiveRecord::Base
                     'back_in_radius' => back_in_radius
                 }
             }
+            RestClient.post(url, request.to_json, headers)
           rescue Exception => e
 
           end
 
-          RestClient.post(url, request.to_json, headers)
         end
       end
     end
