@@ -11,9 +11,8 @@ class Conversation < ActiveRecord::Base
 
   enum status: { active: 0, removed: 1, finished: 2, ignored: 3 }
 
-  validates :initiator_id, presence: true
-  validates :opponent_id, presence: true
-  before_validation :validate_ids
+  validates :initiator_id, :opponent_id, presence: true
+  before_validation :validate_ids, :validate_radius
 
   MUTED_TIME = 5.hours
 
@@ -102,5 +101,9 @@ class Conversation < ActiveRecord::Base
 
   def validate_ids
     self.errors.add :base, 'You can not write to yourself.' if initiator.id == opponent.id
+  end
+
+  def validate_radius
+    self.errors.add :base, "#{opponent.user_name} is out of radius" unless initiator.in_radius? opponent
   end
 end

@@ -106,8 +106,8 @@ class User < ActiveRecord::Base
       conversation.update_attribute(:in_radius, true)
       user = User.find_by(id: [conversation.initiator_id, conversation.opponent_id] - [self.id])
 
-      self.send_push_notification(message: "#{user.user_name} is back in radius", back_in_radius: true) unless conversation.messages_count === 1
-      user.send_push_notification(message: "#{self.user_name} is back in radius", back_in_radius: true) unless conversation.messages_count === 1
+      self.send_push_notification(message: "#{user.user_name} is back in radius", back_in_radius: true)
+      user.send_push_notification(message: "#{self.user_name} is back in radius", back_in_radius: true)
     end
   end
 

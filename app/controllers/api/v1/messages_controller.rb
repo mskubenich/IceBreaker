@@ -13,36 +13,17 @@ class Api::V1::MessagesController < Api::V1Controller
 
     render json: {errors: ['Can\'t find opponent by id.']}, status: :unprocessable_entity and return unless @opponent
 
-    mute = Mute.where(initiator_id: current_user.id, opponent_id: @opponent.id).try :first
-    if !mute
-      mute = Mute.where(initiator_id: @opponent.id, opponent_id: current_user.id).try :first
-    end
+    @conversation = Conversation.new_between_users(initiator: current_user, opponent: @opponent) if current_user.in_radius? @opponent
 
-    if mute
-      case mute.mute_type
-        when "conversation_removed"
-          render json: {errors: ["Conversation removed by #{ mute.initiator.try :user_name }.You have #{ ((Time.now - mute.created_at)/60).round } minutes before another conversation can be started!"]}, status: :unprocessable_entity
-        when "finished"
-          render json: {errors: ["Previous conversations is finished.You have #{ ((Time.now - mute.created_at)/60).round } minutes before another conversation can be started!"]}, status: :unprocessable_entity
-        when "ban"
-          render json: {errors: ["Conversation muted by #{ mute.initiator.try :user_name }.You have #{ ((Time.now - mute.created_at)/60).round } minutes before another conversation can be started!"]}, status: :unprocessable_entity
-        else
-          render json: {errors: ["Conversation is muted"]}, status: :unprocessable_entity
+    if @conversation.save
+      @message = @conversation.messages.new(text: params[:message], author_id: current_user.id, opponent_id: @opponent.id)
+      if @message.save
+        render json: {message: 'Message sent.'}
+      else
+        render json: {errors: @message.errors.full_messages}, status: :unprocessable_entity
       end
     else
-      @conversation = Conversation.new_between_users(initiator: current_user, opponent: @opponent) if current_user.in_radius? @opponent
-      # render json: {errors: @conversation.errors.full_messages }, status: :unprocessable_entity and return if @conversation.errors.any?
-      if @conversation
-        @conversation.save
-        @message = @conversation.messages.new(text: params[:message], author_id: current_user.id, opponent_id: @opponent.id)
-        if @message.save
-          render json: {message: 'Message sent.'}
-        else
-          render json: {errors: @message.errors.full_messages}, status: :unprocessable_entity
-        end
-      else
-        render json: {errors: ["#{@opponent.user_name} is out of radius"]}, status: :unprocessable_entity
-      end
+      render json: {errors: @conversation.errors.full_messages}, status: :unprocessable_entity
     end
   end
 end
