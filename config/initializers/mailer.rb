@@ -5,7 +5,6 @@ ActionMailer::Base.smtp_settings = {
     password:   ENV['MANDRILL_PASSWORD'],
     authentication: :login
 }
-ActionMailer::Base.delivery_method = :smtp
 
 MandrillMailer.configure do |config|
   config.api_key = ENV['MANDRILL_PASSWORD']

@@ -3,15 +3,15 @@ class User < ActiveRecord::Base
 
   attr_accessor :password, :password_confirmation
 
-  validates :email, uniqueness: { case_sensitive: false, message: "This email address is already registered." },
-                    format: { with: /.*\@.*\..*/, message: "is incorrect"},
+  validates :email, uniqueness: { case_sensitive: false, message: 'This email address is already registered.' },
+                    format: { with: /.*\@.*\..*/, message: 'is incorrect'},
                     presence: true
 
-  validates_presence_of :first_name, :last_name, :user_name
+  validates_presence_of :first_name, :last_name, :user_name, :gender
 
   validates :password, presence: true, confirmation: true, length: { in: 8..20 }, if: lambda { new_record? || password }
 
-  validates :gender, inclusion: { in: ['male', 'female'], message: 'can be only male/female'}, presence: true
+  validates_inclusion_of :gender, in: %w{male female}, message: 'can be only male/female'
 
   validates_uniqueness_of :user_name
 
@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   def send_reset_password_instructions(options={})
     new_password = generate_random_string
     update_attributes reset_password_token: new_password
-    UserMailer.forgot_password(self, new_password, path: options[:path]).deliver
+    UserMailer.forgot_password(self, new_password, path: options[:path]).deliver_now
   end
 
   def send_feedback(message)

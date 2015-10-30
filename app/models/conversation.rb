@@ -1,5 +1,5 @@
 class Conversation < ActiveRecord::Base
-  has_many :messages, -> { order('created_at ASC') }, dependent: :destroy
+  has_many :messages, -> { order(:created_at) }, dependent: :destroy
 
   scope :active,        ->  { where(created_at: Time.zone.now - 1.months..Time.zone.now) }
   scope :out_of_radius, ->  { where(in_radius: [false, nil]) }
@@ -18,15 +18,15 @@ class Conversation < ActiveRecord::Base
   MUTED_TIME = 5.hours
 
   def initial_message
-    messages.order('created_at DESC').offset(0).limit(1).try :first
+    messages.order(created_at: :desc).offset(0).limit(1).try :first
   end
 
   def reply_message
-    messages.order('created_at DESC').offset(1).limit(1).try :first
+    messages.order(created_at: :desc).offset(1).limit(1).try :first
   end
 
   def finished_message
-    messages.order('created_at DESC').offset(2).limit(1).try :first
+    messages.order(created_at: :desc).offset(2).limit(1).try :first
   end
 
   def self.all_between(user1, user2)
