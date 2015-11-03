@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :sessions, dependent: :destroy
+  has_one :session, dependent: :destroy
 
   attr_accessor :password, :password_confirmation
 
@@ -114,43 +114,41 @@ class User < ActiveRecord::Base
   def send_push_notification(message:, back_in_radius: false)
     return unless message
 
-    self.sessions.each do |session|
-      if session.device && session.device_token
+    if session.device && session.device_token
 
-        if session.device.downcase == 'ios'
-          begin
-            notification = Grocer::Notification.new(
-                device_token: session.device_token,
-                alert:        message,
-                sound:        "default",
-                badge:        unread_messages_count,
-                custom:       { back_in_radius: back_in_radius }
-            )
-            $ios_pusher.push(notification)
-          rescue Exception => e
-
-          end
-        elsif session.device.downcase == 'android'
-          begin
-            url = 'https://android.googleapis.com/gcm/send'
-            headers = {
-                'Authorization' => 'key=AIzaSyCjfRxYHdy6G0IuIUFeAR5sR2f5jjytKwI',
-                'Content-Type'  => 'application/json'
-            }
-            request = {
-                'registration_ids' => [session.device_token],
-                data: {
-                    'title' => 'IceBr8kr',
-                    'message' => message,
-                    'back_in_radius' => back_in_radius
-                }
-            }
-            RestClient.post(url, request.to_json, headers)
-          rescue Exception => e
-
-          end
+      if session.device.downcase == 'ios'
+        begin
+          notification = Grocer::Notification.new(
+              device_token: session.device_token,
+              alert:        message,
+              sound:        "default",
+              badge:        unread_messages_count,
+              custom:       { back_in_radius: back_in_radius }
+          )
+          $ios_pusher.push(notification)
+        rescue Exception => e
 
         end
+      elsif session.device.downcase == 'android'
+        begin
+          url = 'https://android.googleapis.com/gcm/send'
+          headers = {
+              'Authorization' => 'key=AIzaSyCjfRxYHdy6G0IuIUFeAR5sR2f5jjytKwI',
+              'Content-Type'  => 'application/json'
+          }
+          request = {
+              'registration_ids' => [session.device_token],
+              data: {
+                  'title' => 'IceBr8kr',
+                  'message' => message,
+                  'back_in_radius' => back_in_radius
+              }
+          }
+          RestClient.post(url, request.to_json, headers)
+        rescue Exception => e
+
+        end
+
       end
     end
   end

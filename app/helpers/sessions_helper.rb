@@ -1,6 +1,6 @@
 module SessionsHelper
   def sign_in(user, options)
-    @current_session = user.sessions.create device: options[:device], device_token: options[:device_token]
+    @current_session = user.create_session device: options[:device], device_token: options[:device_token]
     # cookies.permanent[:session_token] = @current_session.token
     self.current_user = user
     current_session
@@ -25,7 +25,7 @@ module SessionsHelper
   end
 
   def destroy_all
-      current_session.user.sessions.destroy_all if current_session
+      current_session.user.session.destroy if current_session
       # cookies.permanent[:session_token] = nil
       self.current_user = nil
   end

@@ -20,7 +20,7 @@ class Api::V1::SessionsController < Api::V1Controller
   end
 
   def destroy_all
-    current_user.sessions.destroy_all
+    current_user.session.destroy
     render nothing: true
   end
 
