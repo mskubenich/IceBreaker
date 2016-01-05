@@ -13,7 +13,6 @@ class Message < ActiveRecord::Base
   after_validation :validate_mute_between_conversations
   after_save :update_user
   after_create :send_push_notification
-  after_save :update_messages
   after_save :update_conversation
 
   def opponent
@@ -62,9 +61,11 @@ class Message < ActiveRecord::Base
 
   def update_conversation
     conversation.update_attributes messages_count: conversation.messages.count
-    if conversation.messages.count == 3
-      conversation.update_attributes status: :finished
-      mute = Mute.create initiator_id: conversation.initiator.id, opponent_id: conversation.opponent.id, mute_type: :finished
+    if conversation.status == 'active'
+      if conversation.messages.count == 3
+        conversation.update_attributes status: :finished
+        mute = Mute.create initiator_id: conversation.initiator.id, opponent_id: conversation.opponent.id, mute_type: :finished
+      end
     end
   end
 

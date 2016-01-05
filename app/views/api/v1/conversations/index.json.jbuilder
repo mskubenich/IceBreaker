@@ -28,6 +28,7 @@ json.conversations @conversations do |conversation|
     json.text last_message.text
     json.viewed last_message.author_id == current_user.id ? true : last_message.viewed
     json.created_at last_message.created_at.strftime("%d/%m/%Y %H:%M")
+    json.show_email last_message.show_email
   end if last_message
 end
 json.page @page

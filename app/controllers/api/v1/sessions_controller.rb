@@ -72,7 +72,7 @@ class Api::V1::SessionsController < Api::V1Controller
   end
 
   def session_params
-    params.permit(:login, :password)
+    params.permit(:login, :password, :device, :device_token)
   end
 
   def facebook_params

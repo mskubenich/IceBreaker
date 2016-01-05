@@ -26,21 +26,21 @@ class Api::V1::ConversationsController < Api::V1Controller
   end
 
   def destroy
-    @mute = Mute.new initiator_id: current_user.id,
-                     opponent_id: @conversation.opponent_to(current_user).id,
-                     mute_type: :conversation_removed,
-                     conversation_id: @conversation.id
+    if @conversation.status == 'active'   
+      Mute.create(initiator_id: current_user.id,
+                  opponent_id: @conversation.opponent_to(current_user).id,
+                  mute_type: :conversation_removed,
+                  conversation_id: @conversation.id) unless @conversation.status == 'ignored' || @conversation.status == 'finished'
+    end
 
-    if @mute.save
-      if @conversation.removed_by == @conversation.opponent_to(current_user).try(:id)
-        @conversation.destroy
-      else
-        @conversation.update_attributes status: :removed, removed_by: current_user.id
-        @conversation.messages.each { |m| m.update_attribute :viewed, true }
-      end
+    if @conversation.removed_by == @conversation.opponent_to(current_user).try(:id)
+      @conversation.destroy
       render json: { ok: true }
     else
-      render json: {errors: @mute.errors.full_messages}, status: :unprocessable_entity
+      @conversation.update_attribute(:status, :removed)
+      @conversation.update_attribute(:removed_by, current_user.id)
+      @conversation.messages.where(opponent_id: current_user.id).each { |m| m.update_attribute :viewed, true }
+      render json: { ok: true }
     end
   end
 end

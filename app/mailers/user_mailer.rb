@@ -12,6 +12,6 @@ class UserMailer < ActionMailer::Base
   def feedback(user, body)
     @user = user
     @body = body
-    mail(to: ENV['FEEDBACK_EMAIL'], subject: "IceBr8kr Feedback")
+    mail(to: 'icefeedback@seismicvisionllc.com', subject: "IceBr8kr Feedback")
   end
 end

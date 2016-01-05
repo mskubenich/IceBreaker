@@ -5,7 +5,6 @@ class Api::V1::LocationController < Api::V1Controller
       render json: { errors: ['Latitude or Longitude are missed'] }, status: :unprocessable_entity
     else
       current_user.set_location(params[:latitude], params[:longitude])
-      current_user.back_in_radius
       render json: { message: 'New location was set successfully' }
     end
   end

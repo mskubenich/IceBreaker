@@ -31,5 +31,6 @@ json.conversation do
     json.text      message.text
     json.viewed     message.author_id == current_user.id ? true : message.viewed
     json.created_at message.created_at.strftime("%d/%m/%Y %H:%M")
+    json.show_email message.show_email
   end
 end

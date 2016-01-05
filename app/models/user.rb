@@ -17,19 +17,19 @@ class User < ActiveRecord::Base
 
   before_save :encrypt_password
 
-  has_attached_file :avatar, styles: { thumb: '200x200>' }, default_url: '/assets/avatar.png', default_style: :thumb
+  has_attached_file :avatar, styles: { thumb: '200x200#' }, default_url: '/assets/avatar.png', default_style: :thumb
 
   validates_attachment :avatar, content_type: { content_type: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'application/octet-stream'] }
 
   has_many :services
-
-  before_save :update_location_timestamp
 
   DISTANCE_IN_RADIUS     = 0.09144 # 100 yards in kilometers
   DISTANCE_OUT_OF_RADIUS = 8.047   # 5 miles in kilometers
 
   reverse_geocoded_by :latitude, :longitude
   after_validation :reverse_geocode
+
+  before_save :update_location_timestamp
 
   has_many :initiated_conversations, class_name: Conversation, foreign_key: :initiator_id
   has_many :supported_conversations, class_name: Conversation, foreign_key: :opponent_id
@@ -104,17 +104,19 @@ class User < ActiveRecord::Base
 
     new_in_radius.each do |conversation|
       conversation.update_attribute(:in_radius, true)
-      user = User.find_by(id: [conversation.initiator_id, conversation.opponent_id] - [self.id])
+      if conversation.messages.first.created_at < Time.now - 25.seconds	
+        user = User.find_by(id: [conversation.initiator_id, conversation.opponent_id] - [self.id])
 
-      self.send_push_notification(message: "#{user.user_name} is back in radius", back_in_radius: true)
-      user.send_push_notification(message: "#{self.user_name} is back in radius", back_in_radius: true)
+        self.send_push_notification(message: "#{user.user_name} is back in radius", back_in_radius: true)
+        user.send_push_notification(message: "#{self.user_name} is back in radius", back_in_radius: true)
+      end
     end
   end
 
   def send_push_notification(message:, back_in_radius: false)
     return unless message
 
-    if session.device && session.device_token
+    if session && session.device && session.device_token
 
       if session.device.downcase == 'ios'
         begin

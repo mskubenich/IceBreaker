@@ -23,20 +23,25 @@ class Api::V1::UsersController < Api::V1Controller
   end
 
   def mute
-    @user = User.find params[:opponent_id]
+    already_muted = Mute.where(initiator_id: [current_user.id, params[:opponent_id]], opponent_id: [current_user.id, params[:opponent_id]])
+    if already_muted.blank?
+      @user = User.find params[:opponent_id]
 
-    @mute = Mute.new initiator_id: current_user.id, opponent_id: @user.id, mute_type: :ban
+      @mute = Mute.new initiator_id: current_user.id, opponent_id: @user.id, mute_type: :ban
 
-    if @mute.save
-      Conversation.all_between(current_user, @user).each do |c|
-        next unless c.active?
-        c.update_attribute :status, :ignored
-        c.messages.each { |m| m.update_attribute :viewed, true }
+      if @mute.save
+        Conversation.all_between(current_user, @user).each do |c|
+          next unless c.active?
+          c.update_attribute :status, 3
+          c.messages.where(opponent_id: current_user.id).each { |m| m.update_attribute :viewed, true }
+        end
+        render json: { ok: true }
+      else
+        render json: {errors: @mute.errors.full_messages}, status: :unprocessable_entity
       end
-      render json: { ok: true }
-    else
-      render json: {errors: @mute.errors.full_messages}, status: :unprocessable_entity
-    end
+    else 
+      render json: {errors: 'Already muted.'}, status: :unprocessable_entity
+    end 
   end
 
   private

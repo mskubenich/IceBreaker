@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      post :app_url
       resources :users, only: [:create] do
         collection do
           put :update_profile
