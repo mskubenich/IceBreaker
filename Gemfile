@@ -43,3 +43,17 @@ gem 'sidekiq'
 gem 'sinatra'
 gem 'whenever'
 gem 'rest_client'
+
+group :test do
+  gem 'rspec-sidekiq'
+  gem 'rspec-rails', '~> 3.0'
+  gem 'factory_girl_rails'
+  gem "database_cleaner", "~> 1.2.0"
+  gem 'rspec-collection_matchers'
+  gem 'shoulda-matchers', require: false
+  gem 'timecop'
+  gem 'simplecov', require: false
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'webmock'
+end

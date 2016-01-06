@@ -65,8 +65,8 @@ class User < ActiveRecord::Base
   end
 
   def set_location(lat, lng)
-    self.update_attributes latitude: lat.gsub(',', '.'),
-                           longitude: lng.gsub(',', '.'),
+    self.update_attributes latitude: lat.to_s.gsub(',', '.'),
+                           longitude: lng.to_s.gsub(',', '.'),
                            location_updated_at: Time.now
     back_in_radius
   end
@@ -157,6 +157,18 @@ class User < ActiveRecord::Base
 
   def in_radius?(opponent)
     User.near([self.latitude, self.longitude], User::DISTANCE_IN_RADIUS).where(id: opponent.id).present?
+  end
+
+  def self.search(latitude:, longitude:, distance: , except_ids: , current_user:)
+    User.near([latitude, longitude], distance).
+        select('conversation.updated_at AS conversation_updated_at').
+        joins( <<SQL
+        LEFT JOIN (SELECT initiator_id, opponent_id, updated_at FROM conversations ORDER BY conversations.updated_at) conversation
+        ON conversation.initiator_id IN (users.id, #{ current_user.id }) AND conversation.opponent_id IN ( #{ current_user.id }, users.id )
+SQL
+        ).
+        where.not(id: except_ids).
+        reorder('conversation.updated_at DESC, users.user_name ASC')
   end
 
   def sended_messages_count_to(user)

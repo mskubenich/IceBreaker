@@ -1,5 +1,5 @@
 module SessionsHelper
-  def sign_in(user, options)
+  def sign_in(user, options = {})
     @current_session = user.create_session device: options[:device], device_token: options[:device_token]
     # cookies.permanent[:session_token] = @current_session.token
     self.current_user = user
