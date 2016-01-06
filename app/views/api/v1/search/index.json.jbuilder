@@ -33,7 +33,7 @@ json.users_in_radius @users_in_radius do |user|
   json.previous_conversation_is_finished !!conversation_finished_mute
   json.previous_conversation_is_finished_to conversation_finished_mute ? (conversation_finished_mute.created_at + 5.minutes) - Time.now.utc : ''
 
-  json.last_activity user['conversation_updated_at'].strftime("%d/%m/%Y %H:%M")
+  json.last_activity user['conversation_updated_at'].try(:strftime, "%d/%m/%Y %H:%M")
 end
 
 json.users_out_of_radius @users_out_of_radius do |user|
@@ -70,5 +70,5 @@ json.users_out_of_radius @users_out_of_radius do |user|
   json.previous_conversation_is_finished !!conversation_finished_mute
   json.previous_conversation_is_finished_to conversation_finished_mute ? (conversation_finished_mute.created_at + 5.minutes) - Time.now.utc : ''
 
-  json.last_activity user['conversation_updated_at'].strftime("%d/%m/%Y %H:%M")
+  json.last_activity user['conversation_updated_at'].try(:strftime, "%d/%m/%Y %H:%M")
 end
