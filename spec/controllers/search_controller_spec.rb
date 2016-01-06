@@ -34,6 +34,7 @@ describe Api::V1::SearchController, type: :controller do
         user.set_location(0, 0)
         Timecop.travel(Time.new(2002, i + 1, i + 1, 2, 2, 2, "+02:00")) do
           create :conversation, initiator_id: current_user.id, opponent_id: user.id
+          create :conversation, initiator_id: current_user.id, opponent_id: user.id
         end
       end
 

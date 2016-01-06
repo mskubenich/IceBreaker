@@ -168,6 +168,7 @@ class User < ActiveRecord::Base
 SQL
         ).
         where.not(id: except_ids).
+        group('users.id').
         reorder('conversation.updated_at DESC, users.user_name ASC')
   end
 
