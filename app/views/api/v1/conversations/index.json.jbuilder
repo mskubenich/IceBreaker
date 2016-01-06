@@ -1,7 +1,7 @@
 json.conversations @conversations do |conversation|
   json.id conversation.id
-  json.created_at conversation.created_at
-  json.updated_at conversation.updated_at
+  json.created_at conversation.created_at.strftime("%d/%m/%Y %H:%M")
+  json.updated_at conversation.updated_at.strftime("%d/%m/%Y %H:%M")
   json.finished !conversation.active?
   json.status conversation.status
   json.removed_by conversation.removed_by if conversation.removed?
