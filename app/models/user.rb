@@ -169,7 +169,7 @@ SQL
         ).
         where.not(id: except_ids).
         group('users.id').
-        reorder('conversation.updated_at DESC, users.user_name ASC')
+        reorder('users.user_name ASC')
   end
 
   def sended_messages_count_to(user)
